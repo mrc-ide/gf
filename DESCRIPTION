@@ -6,7 +6,7 @@ Authors@R: c(
   )
 Description: Contains functionality and associated documentation for both pre- 
   and post- modelling workflows for modelling to support the Global Fund's 
-  replenishment for the period2024 - 2026.
+  replenishment for the period 2024 - 2026.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
