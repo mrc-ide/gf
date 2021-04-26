@@ -1,0 +1,17 @@
+Package: gf
+Title: Global fund malaria modelling
+Version: 0.0.1
+Authors@R: c(
+  person("Peter", "Winskill", email = "p.winskill@imperial.ac.uk", role = c("aut", "cre"))
+  )
+Description: Contains functionality and associated documentation for both pre- 
+  and post- modelling workflows for modelling to support the Global Fund's 
+  replenishment for the period2024 - 2026.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
