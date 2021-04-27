@@ -1,7 +1,7 @@
 test_that("Process epi works", {
   df <- data.frame(name = "test_epi",
-                   lower = c(0, 5),
-                   upper = c(5, 10),
+                   age_lower = c(0, 5),
+                   age_upper = c(5, 10),
                    inc = c(0.01, 0.02),
                    sev = c(0.04, 0.05),
                    prop = c(0.25, 0.75),
@@ -30,5 +30,5 @@ test_that("Process epi works", {
   
   df <- df %>%
     non_malarial_fevers()
-  expect_equal(df$non_malarial_fevers, ifelse(df$upper == 5, 3.4 * df$par, df$par))
+  expect_equal(df$non_malarial_fevers, ifelse(df$age_upper == 5, 3.4 * df$par, df$par))
 })
