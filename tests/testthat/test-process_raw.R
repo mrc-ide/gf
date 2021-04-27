@@ -4,7 +4,6 @@ test_that("Year summary works", {
   expect_equal(year_summary(df), df_target)
 })
 
-
 test_that("model_output_to_long works", {
   df <- data.frame(name1 = "run1", 
                    name2 = "part1",
