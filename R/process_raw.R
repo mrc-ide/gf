@@ -32,9 +32,9 @@ model_output_to_long <- function(x, ...){
     # Remove _smooth subscript for neater names
     dplyr::mutate(var = stringr::str_remove(.data$var, "_smooth")) %>%
     # Isolate lower and upper age bounds from variable names
-    tidyr::separate(.data$var, into = c("type", "lower", "upper"), sep = "_", convert = TRUE) %>%
+    tidyr::separate(.data$var, into = c("type", "age_lower", "age_upper"), sep = "_", convert = TRUE) %>%
     # Convert back to wide
-    tidyr::pivot_wider(id_cols = c(..., .data$year, .data$lower, .data$upper), names_from = .data$type, values_from = .data$y)
+    tidyr::pivot_wider(id_cols = c(..., .data$year, .data$age_lower, .data$age_upper), names_from = .data$type, values_from = .data$y)
 }
 
 #' Raw output pre-processing wrapper

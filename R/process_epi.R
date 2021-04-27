@@ -53,5 +53,5 @@ deaths <- function(x){
 #' @param rate_over_5 Annual incidence of NMFs in individuals over 5
 non_malarial_fevers <- function(x, rate_under_5 = 3.4, rate_over_5 = 1){
   x %>%
-    dplyr::mutate(non_malarial_fevers = round(ifelse(.data$upper == 5, rate_under_5 * .data$par, rate_over_5 * .data$par)))
+    dplyr::mutate(non_malarial_fevers = round(ifelse(.data$age_upper == 5, rate_under_5 * .data$par, rate_over_5 * .data$par)))
 }
