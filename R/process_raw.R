@@ -50,7 +50,7 @@ process_raw <- function(raw_output, ...){
     dplyr::select(..., .data$year, dplyr::contains("smooth")) %>%
     # Annual summary
     year_summary() %>%
-    # Formatiing
+    # Formatting
     model_output_to_long(...)
 }
 
