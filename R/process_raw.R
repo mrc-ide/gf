@@ -17,7 +17,6 @@ year_summary <- function(x, baseline_year = 2000, max_year = 2050){
     dplyr::filter(.data$year %in% baseline_year:max_year)
 }
 
-
 #' Raw output to long
 #' 
 #' Converts wide (by age groups) to long
@@ -37,7 +36,6 @@ model_output_to_long <- function(x, ...){
     # Convert back to wide
     tidyr::pivot_wider(id_cols = c(..., .data$year, .data$lower, .data$upper), names_from = .data$type, values_from = .data$y)
 }
-
 
 #' Raw output pre-processing wrapper
 #'
