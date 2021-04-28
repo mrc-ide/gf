@@ -34,3 +34,4 @@ age_specific_coverage <- function(x, ipti_age_lower = 0.25, ipti_age_upper = 2, 
       rtss_coverage = .data$rtss_coverage  * proportion_overlap(.data$age_lower, .data$age_upper, rtss_age_lower, rtss_age_upper)
     )
 }
+
