@@ -1,7 +1,9 @@
 test_that("commodities and services", {
   df <- data.frame(par = 1000,
                    eq_npc = 0.8,
+                   net_type = "pyrethroid",
                    irs_coverage = 0.5,
+                   irs_compound = "actellic",
                    smc_coverage = 0.8,
                    smc_rounds = 4,
                    ipti_coverage = 0.1,
@@ -14,12 +16,16 @@ test_that("commodities and services", {
                    cases = 100,
                    severe_cases = 10,
                    non_malarial_fevers = 25,
-                   prev = 0.6
+                   prev = 0.6,
+                   population_prevalence = 0.6
                    )
   df <- commodities_and_services(df)
   
-  expect_equal(df$llins_nets_distributed, round(annual_net_distibuted_gts(0.8) * 1000))
-  expect_equal(df$irs_people_protected, 0.5 * 1000)
+  expect_equal(df$pyrethroid_nets_distributed, round(annual_net_distibuted_gts(0.8) * 1000))
+  expect_equal(df$pyrethroid_pbo_nets_distributed, 0)
+  expect_equal(df$pyrethroid_chlorfenapyr_nets_distributed, 0)
+  expect_equal(df$ddt_irs_people_protected, 0)
+  expect_equal(df$actellic_irs_people_protected, 0.5 * 1000)
   expect_equal(df$smc_doses, 0.8 * 1000 * 4)
   expect_equal(df$ipti_doses, 0.1 * 1000 * 3)
   expect_equal(df$rtss_doses, 0.5 * 1000 * 4)
