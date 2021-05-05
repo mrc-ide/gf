@@ -17,3 +17,16 @@
 #' 
 #' Proportion of cases that are _plasmodium falciparum_. Sourced from the WHO GMP. Proportion is assumed constant in the future.
 "ppf"
+
+#' Population projections
+#' 
+#' Population and population at risk projections.
+#' \href{https://ghsl.jrc.ec.europa.eu/index.php}{European Commission. GHSL - Global Human Settlement Layer}
+#' Lloyd _et al_. Data Descriptor: High resolution global gridded data for use in population studies. Nat Sci Data. 2017
+#' \href{https://population.un.org/wpp/}{United Nations. World Population Prospects. 2019}
+#' \href{https://population.un.org/wup/ }{United Nations. World Urbanization Prospects. 2018.}
+"population_projections"
+
+#' Use to npc
+#' 
+"use_npc"

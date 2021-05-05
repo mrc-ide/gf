@@ -3,7 +3,7 @@
 \docType{data}
 \name{treatment_unit_costs}
 \alias{treatment_unit_costs}
-\title{Unit costs}
+\title{Treatment unit costs}
 \format{
 An object of class \code{data.frame} with 3880 rows and 10 columns.
 }
