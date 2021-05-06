@@ -27,6 +27,10 @@
 #' \href{https://population.un.org/wup/ }{United Nations. World Urbanization Prospects. 2018.}
 "population_projections"
 
+#' List of countries to model for the GF
+#' 
+"gf_countries"
+
 #' Use to npc
 #' 
 "use_npc"
