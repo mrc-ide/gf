@@ -22,6 +22,7 @@ Imports:
     magrittr,
     stringr,
     tibble,
-    rlang (>= 0.1.2)
+    rlang (>= 0.1.2),
+    purrr
 Depends: 
     R (>= 2.10)
