@@ -1,6 +1,7 @@
 #' Rename interventions
 #'
 #' @param x GP interventions data.frame
+#' @export
 interventions_rename <- function(x){
   x %>%
     dplyr::rename(treatment_coverage = .data$tx,
@@ -25,6 +26,7 @@ extend <- function(x){
 #' Split out iccm coverage from treatment coverage
 #'
 #' @param x Interventions data.frame
+#' @export
 back_adjust_iccm <- function(x){
   x %>%
     dplyr::mutate(iccm_coverage = .data$iccm * 0.1,
@@ -125,6 +127,7 @@ create_names <- function(intervention_binary_options, names){
 #' @param gp_input_single A input row (site) from the GP
 #'
 #' @return data.frame of all options for the site
+#' @export
 replenishment_options <- function(gp_input_single){
   # Create all possible combinations of interventions given interventions available in the GP in 2026
   intervention_option_matrix <- create_intervention_option_matrix(dplyr::filter(gp_input_single$interventions[[1]], .data$year == 2026))
