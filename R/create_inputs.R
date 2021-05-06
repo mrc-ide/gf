@@ -1,10 +1,24 @@
+#' Rename interventions
+#'
+#' @param x GP interventions data.frame
+interventions_rename <- function(x){
+  x %>%
+    dplyr::rename(treatment_coverage = .data$tx,
+                  net_coverage = .data$llin,
+                  irs_coverage = .data$irs,
+                  smc_coverage = .data$smc,
+                  rtss_coverage = .data$rtss,
+                  iptp_coverage = .data$iptp,
+                  ipti_coverage = .data$ipti)
+}
+
 #' Extend any inputs that do not span the full modelled time horizon
 #'
 #' @param x Input data.frame
 #' @export
 extend <- function(x){
   x %>% 
-    tidyr::complete(year = 1950:2051) %>%
+    tidyr::complete(year = 2000:2051) %>%
     tidyr::fill(-.data$year, .direction = "down")
 }
 
@@ -115,7 +129,7 @@ replenishment_options <- function(gp_input_single){
   # Create all possible combinations of interventions given interventions available in the GP in 2026
   intervention_option_matrix <- create_intervention_option_matrix(dplyr::filter(gp_input_single$interventions[[1]], .data$year == 2026))
   # Create modified intervention inputs for each set of intervention options
-  intervention_options <- c(purrr::pmap(intervention_option_matrix, create_coverage, gp_coverage = gp_input_single$interventions[[1]]), gp_input_single$interventions)
+  intervention_options <- c(purrr::pmap(intervention_option_matrix, create_coverage, gp_interventions = gp_input_single$interventions[[1]]), gp_input_single$interventions)
   # Create a unique name for each set of modified intervention inputs
   replenishment_names <- c(apply(intervention_option_matrix, 1, create_names, names = names(intervention_option_matrix)), "gp")
   # Create the full set of inputs for each set of modified intervention inputs
@@ -124,7 +138,7 @@ replenishment_options <- function(gp_input_single){
                   post = "gp",
                   replenishment = replenishment_names,
                   interventions = intervention_options,
-                  interventions = lapply(integer, forward_adjust_iccm)) %>%
+                  interventions = lapply(.data$interventions, forward_adjust_iccm)) %>%
     dplyr::select(.data$Continent, .data$ISO, .data$NAME_0, .data$NAME_1, .data$NAME_2,.data$ur, .data$pre, .data$replenishment, .data$post, .data$interventions, tidyr::everything())
   return(output)
 }
