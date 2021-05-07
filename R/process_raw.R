@@ -62,8 +62,8 @@ process_raw <- function(raw_output, ...){
 #' @param x Model output
 replace_missing <- function(x){
   x %>%
-    mutate(prev = ifelse(prev == -999, 0, prev),
-           inc = ifelse(inc == -999, 0, inc),
-           sev = ifelse(sev == -999, 0, sev),
-           prop = ifelse(prop == -999, 0, prop))
+    dplyr::mutate(prev = ifelse(.data$prev == -999, 0, .data$prev),
+           inc = ifelse(.data$inc == -999, 0, .data$inc),
+           sev = ifelse(.data$sev == -999, 0, .data$sev),
+           prop = ifelse(.data$prop == -999, 0, .data$prop))
 }
