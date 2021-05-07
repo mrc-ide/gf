@@ -51,6 +51,19 @@ process_raw <- function(raw_output, ...){
     # Annual summary
     year_summary() %>%
     # Formatting
-    model_output_to_long(...)
+    model_output_to_long(...) %>%
+    # Replace -999
+    replace_missing()
 }
 
+
+#' Replaces -999 values in outputs
+#'
+#' @param x Model output
+replace_missing <- function(x){
+  x %>%
+    mutate(prev = ifelse(prev == -999, 0, prev),
+           inc = ifelse(inc == -999, 0, inc),
+           sev = ifelse(sev == -999, 0, sev),
+           prop = ifelse(prop == -999, 0, prop))
+}

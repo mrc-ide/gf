@@ -43,3 +43,4 @@ test_that("Year summary works", {
                       prev = c(5, 7, 5, 7))
   expect_equal(process_raw(df, name1, name2), df_target)
 })
+
