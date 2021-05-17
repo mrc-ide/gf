@@ -10,7 +10,7 @@
 commodities_and_services <- function(x){
   x %>%
     dplyr::mutate(
-      eq_npc = ifelse(.data$target_use == 0, 0, eq_npc),
+      eq_npc = ifelse(.data$target_use == 0, 0, .data$eq_npc),
       pyrethroid_nets_distributed = ifelse(.data$net_type == "pyrethroid", round(annual_net_distibuted_gts(.data$eq_npc) * .data$par), 0),
       pyrethroid_pbo_nets_distributed = ifelse(.data$net_type == "pbo", round(annual_net_distibuted_gts(.data$eq_npc) * .data$par), 0),
       pyrethroid_chlorfenapyr_nets_distributed = ifelse(.data$net_type == "ig2", round(annual_net_distibuted_gts(.data$eq_npc) * .data$par), 0),
@@ -87,5 +87,5 @@ annual_net_distibuted <- function(eq_npc){
 #' @param x Model output
 add_target_use <- function(x){
   x %>%
-    dplyr::mutate(target_use = ifelse(net_coverage < 0.05 & net_coverage > 0, 0.1, round(net_coverage, 1)))
+    dplyr::mutate(target_use = ifelse(.data$net_coverage < 0.05 & .data$net_coverage > 0, 0.1, round(.data$net_coverage, 1)))
 }

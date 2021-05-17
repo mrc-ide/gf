@@ -4,6 +4,7 @@ test_that("costs", {
                    age_lower = 0,
                    age_upper = 5,
                    par = 1000,
+                   target_use = 0.6,
                    eq_npc = 0.8,
                    net_type = "pyrethroid",
                    irs_coverage = 0.5,
@@ -15,8 +16,8 @@ test_that("costs", {
                    rtss_coverage = 0.5,
                    rtss_rounds = 4,
                    treatment_coverage = 0.9,
-                   proportion_act = 0.75,
-                   proportion_pf = 0.75,
+                   prop_act = 0.75,
+                   prop_pf = 0.75,
                    cases = 100,
                    severe_cases = 10,
                    non_malarial_fevers = 25,
@@ -59,7 +60,7 @@ test_that("costs", {
   expect_equal(df$irs_cost, df$ddt_irs_cost + df$actellic_irs_cost)
   expect_equal(df$diagnostic_and_treatment_cost, df$rdt_cost + df$act_cost + df$non_act_cost + 
                  df$microscopy_cost + df$act_primaquine_cost + df$non_malarial_fever_rdt_cost + 
-                 df$non_malaria_fever_act_cost + df$inpatient_cost + df$outpatient_cost)
+                 df$non_malarial_fever_act_cost + df$inpatient_cost + df$outpatient_cost)
   expect_equal(df$elimination_cost, df$case_investigation_cost + df$proactive_case_detection_cost)
   
   expect_equal(df$total_cost, total_cost_check)

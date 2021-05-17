@@ -80,8 +80,8 @@ non_malarial_fevers <- function(x, rate_under_5 = 3.4, rate_over_5 = 1){
 #' @param x Model output
 population_indicators <- function(x){
   x %>%
-    dplyr::group_by(Continent, ISO, NAME_0, NAME_1, NAME_2, ur, pre, replenishment, post, year) %>%
-    dplyr::mutate(population_prevalence = ifelse(sum(par) ==0, 0, weighted.mean(prev, par)),
-                  population_api = ifelse(sum(par) ==0, 0, (sum(cases) / sum(par)) * 365)) %>%
+    dplyr::group_by(.data$Continent, .data$ISO, .data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur, .data$pre, .data$replenishment, .data$post, .data$year) %>%
+    dplyr::mutate(population_prevalence = ifelse(sum(.data$par) ==0, 0, stats::weighted.mean(.data$prev, .data$par)),
+                  population_api = ifelse(sum(.data$par) ==0, 0, (sum(.data$cases) / sum(.data$par)) * 365)) %>%
     dplyr::ungroup()
 }
