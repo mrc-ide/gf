@@ -64,6 +64,8 @@ replace_missing <- function(x){
   x %>%
     dplyr::mutate(prev = ifelse(.data$prev == -999, 0, .data$prev),
            inc = ifelse(.data$inc == -999, 0, .data$inc),
+           inc = ifelse(.data$inc == Inf, 0, .data$inc),
            sev = ifelse(.data$sev == -999, 0, .data$sev),
+           sev = ifelse(.data$sev == Inf, 0, .data$sev),
            prop = ifelse(.data$prop == -999, 0, .data$prop))
 }

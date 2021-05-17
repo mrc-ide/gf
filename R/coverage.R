@@ -26,10 +26,10 @@ proportion_overlap <- function(age_lower, age_upper, range_lower, range_upper){
 #' @param ipti_age_upper Upper age for IPTi
 #' @param rtss_age_lower Lower age for RTS,S
 #' @param rtss_age_upper Upper age for RTS,S
-age_specific_coverage <- function(x, ipti_age_lower = 0.25, ipti_age_upper = 2, rtss_age_lower = 0.125, rtss_age_upper = 1.5){
+age_specific_coverage <- function(x, smc_age_lower = 0.5, smc_age_upper = 5, ipti_age_lower = 0.25, ipti_age_upper = 2, rtss_age_lower = 0.125, rtss_age_upper = 1.5){
   x %>%
     dplyr::mutate(
-      smc_coverage = .data$smc_coverage * proportion_overlap(.data$age_lower, .data$age_upper, .data$smc_age_lower, .data$smc_age_upper),
+      smc_coverage = .data$smc_coverage * proportion_overlap(.data$age_lower, .data$age_upper, smc_age_lower, smc_age_upper),
       ipti_coverage = .data$ipti_coverage * proportion_overlap(.data$age_lower, .data$age_upper, ipti_age_lower, ipti_age_upper),
       rtss_coverage = .data$rtss_coverage  * proportion_overlap(.data$age_lower, .data$age_upper, rtss_age_lower, rtss_age_upper)
     )
