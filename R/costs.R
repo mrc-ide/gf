@@ -15,7 +15,7 @@ component_costs <- function(x){
       microscopy_cost = round((.data$pf_microscopy + .data$pv_microscopy) * .data$cost_per_microscopy),
       act_primaquine_cost = round(.data$pv_act_primaquine_courses * .data$cost_per_course_act_and_primaquine),
       non_malarial_fever_rdt_cost = round(.data$non_malarial_fever_rdts * .data$cost_per_rdt),
-      non_malaria_fever_act_cost = round(.data$non_malaria_fever_act * .data$cost_per_course_act),
+      non_malarial_fever_act_cost = round(.data$non_malarial_fever_act * .data$cost_per_course_act),
       outpatient_cost = round(.data$outpatient_visits * .data$cost_per_outpatient_visit),
       inpatient_cost = round(.data$inpatient_visits * .data$cost_per_inpatient_visit),
       surveillance_cost = round(.data$par * .data$cost_per_capita_surveillance),
@@ -39,7 +39,7 @@ category_costs <- function(x){
       irs_cost = .data$ddt_irs_cost + .data$actellic_irs_cost,
       diagnostic_and_treatment_cost = .data$rdt_cost + .data$act_cost + .data$non_act_cost + 
         .data$microscopy_cost + .data$act_primaquine_cost + .data$non_malarial_fever_rdt_cost + 
-        .data$non_malaria_fever_act_cost + .data$inpatient_cost + .data$outpatient_cost,
+        .data$non_malarial_fever_act_cost + .data$inpatient_cost + .data$outpatient_cost,
       elimination_cost = .data$case_investigation_cost + .data$proactive_case_detection_cost,
       total_cost = .data$net_cost + .data$irs_cost + .data$smc_cost + .data$ipti_cost + .data$rtss_cost +
         .data$diagnostic_and_treatment_cost + .data$surveillance_cost + .data$elimination_cost
