@@ -2,6 +2,7 @@
 #'
 #' @param x Model output
 #' @param coverage_input Coverage inputs for run 
+#' @export
 link_data <- function(x, coverage_input){
   use_npc <- get("use_npc")
   ppf <- get("ppf")
