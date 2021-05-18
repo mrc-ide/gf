@@ -10,7 +10,7 @@ create_optimisation_data(processed_output)
 \item{processed_output}{Processed model output}
 }
 \value{
-Data for use in optimiation
+Data for use in optimisation
 }
 \description{
 Create dataset for optimisation
