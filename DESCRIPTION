@@ -23,6 +23,10 @@ Imports:
     stringr,
     tibble,
     rlang (>= 0.1.2),
-    purrr
+    purrr,
+    ROI,
+    ompr.roi
 Depends: 
-    R (>= 2.10)
+    R (>= 2.10),
+    ROI.plugin.glpk,
+    ompr
