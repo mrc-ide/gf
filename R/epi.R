@@ -105,7 +105,6 @@ life_years <- function(x){
     dplyr::mutate(life_years = 1 * (.data$par - .data$deaths) + 0.5 * .data$deaths)
 }
 
-
 #' Add some population-level indicators
 #' 
 #' These indicators aggregate prevalence and API summaries across age groups to inform
