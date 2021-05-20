@@ -34,3 +34,7 @@
 #' Use to npc
 #' 
 "use_npc"
+
+#' WHO burden estimates (callibrated to)
+#' 
+"who_burden"

@@ -31,4 +31,14 @@ test_that("Process epi works", {
   df <- df %>%
     non_malarial_fevers()
   expect_equal(df$non_malarial_fevers, ifelse(df$age_upper == 5, 3.4 * df$par, df$par))
+  
+  df <- df %>%
+    daly_components()
+  expect_equal(df$yld, ifelse(df$age_upper == 5, df$cases * 0.01375 * 0.211 + df$severe_cases * 0.04795 * 0.6, 
+                              df$cases * 0.01375 * 0.195 + df$severe_cases * 0.04795 * 0.6))
+  expect_equal(df$yll, df$deaths * (63 - ((df$age_lower + df$age_upper) / 2)))
+  
+  df <- df %>%
+    life_years()
+  expect_equal(df$life_years, df$par - df$deaths + 0.5 * df$deaths)
 })
