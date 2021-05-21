@@ -11,7 +11,10 @@ epi_post_processing <- function(x){
     non_malarial_fevers() %>%
     population_indicators() %>%
     daly_components() %>%
-    dalys_cast_forward(lifespan = 63, Continent, ISO, NAME_0, NAME_1, NAME_2, ur, pre, replenishment, post, age_lower, age_upper) %>%
+    dalys_cast_forward(lifespan = 63, .data$Continent, .data$ISO, .data$NAME_0,
+                       .data$NAME_1, .data$NAME_2, .data$ur, .data$pre,
+                       .data$replenishment, .data$post, .data$age_lower,
+                       .data$age_upper) %>%
     life_years()
 }
 
@@ -125,15 +128,17 @@ yll_cast_forward <- function(row, lifeleft, cumulative_deaths){
 #' Where, for example, a death of newborn in year 2000 with a life expectancy of 63 will add 1 YLL for each year from 2000:2062
 #'
 #' @param x Model output
+#' @param lifespan Average life expectancy
+#' @param ... Grouping arguments
 dalys_cast_forward <- function(x, lifespan, ...){
   x %>%
     dplyr::group_by(...) %>%
     dplyr::arrange(.data$year, .by_group = TRUE) %>%
     dplyr::mutate(csd = cumsum(.data$deaths),
-                  yll_cast_forwards = purrr::map2_dbl(row_number(),  (lifespan - ((age_upper + age_lower) / 2)), yll_cast_forward, cumulative_deaths = csd)) %>%
+                  yll_cast_forwards = purrr::map2_dbl(dplyr::row_number(),  (lifespan - ((.data$age_upper + .data$age_lower) / 2)), yll_cast_forward, cumulative_deaths = .data$csd)) %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(dalys = yld + yll_cast_forwards) %>%
-    dplyr::select(-csd)
+    dplyr::mutate(dalys = .data$yld + .data$yll_cast_forwards) %>%
+    dplyr::select(-.data$csd)
 }
 
 #' Add some population-level indicators
