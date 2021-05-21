@@ -10,7 +10,7 @@ epi_post_processing <- function(x){
     deaths() %>%
     non_malarial_fevers() %>%
     population_indicators() %>%
-    daly_components() %>%
+    daly_components(lifespan = 63) %>%
     dalys_cast_forward(lifespan = 63, .data$Continent, .data$ISO, .data$NAME_0,
                        .data$NAME_1, .data$NAME_2, .data$ur, .data$pre,
                        .data$replenishment, .data$post, .data$age_lower,
