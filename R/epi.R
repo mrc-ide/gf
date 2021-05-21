@@ -11,6 +11,7 @@ epi_post_processing <- function(x){
     non_malarial_fevers() %>%
     population_indicators() %>%
     daly_components() %>%
+    dalys_cast_forward(lifespan = 63, Continent, ISO, NAME_0, NAME_1, NAME_2, ur, pre, replenishment, post, age_lower, age_upper) %>%
     life_years()
 }
 
@@ -85,14 +86,14 @@ non_malarial_fevers <- function(x, rate_under_5 = 3.4, rate_over_5 = 1){
 #' @param weight3 Disability weight age group 3
 #' @param severe_weight Disability weight severe malaria
 daly_components <- function(x, lifespan = 63, 
-                  episode_length = 0.01375, severe_episode_length = 0.04795,
-                  weight1 = 0.211, weight2 = 0.195, weight3 = 0.172,
-                  severe_weight = 0.6){
+                            episode_length = 0.01375, severe_episode_length = 0.04795,
+                            weight1 = 0.211, weight2 = 0.195, weight3 = 0.172,
+                            severe_weight = 0.6){
   x %>%
     dplyr::mutate(yll = .data$deaths * (lifespan - ((.data$age_lower + .data$age_upper) / 2)),
                   yld = dplyr::case_when(.data$age_upper <= 5 ~ .data$cases * episode_length * weight1 + .data$severe_cases * severe_episode_length * severe_weight,
-                                  .data$age_upper > 5 & .data$age_upper <= 15 ~ .data$cases * episode_length * weight2 + .data$severe_cases * severe_episode_length * severe_weight,
-                                  .data$age_upper > 15 ~ .data$cases * episode_length * weight3 + .data$severe_cases * severe_episode_length * severe_weight))
+                                         .data$age_upper > 5 & .data$age_upper <= 15 ~ .data$cases * episode_length * weight2 + .data$severe_cases * severe_episode_length * severe_weight,
+                                         .data$age_upper > 15 ~ .data$cases * episode_length * weight3 + .data$severe_cases * severe_episode_length * severe_weight))
 }
 
 #' Add Life years lived
@@ -103,6 +104,36 @@ daly_components <- function(x, lifespan = 63,
 life_years <- function(x){
   x %>%
     dplyr::mutate(life_years = 1 * (.data$par - .data$deaths) + 0.5 * .data$deaths)
+}
+
+
+#' Sum of deaths in last "lifetime left" years
+#'
+#' @param row Row index
+#' @param lifeleft Years of life left
+#' @param cumulative_deaths Cumulative deaths
+yll_cast_forward <- function(row, lifeleft, cumulative_deaths){
+  if(lifeleft < 0) {
+    return(0)
+  } else{
+    return(cumulative_deaths[row] - ifelse(row - lifeleft <= 1, pmax(0, row - lifeleft), cumulative_deaths[row - lifeleft]))
+  }
+}
+
+#' Dalys case forward
+#' 
+#' Where, for example, a death of newborn in year 2000 with a life expectancy of 63 will add 1 YLL for each year from 2000:2062
+#'
+#' @param x Model output
+dalys_cast_forward <- function(x, lifespan, ...){
+  x %>%
+    dplyr::group_by(...) %>%
+    dplyr::arrange(.data$year, .by_group = TRUE) %>%
+    dplyr::mutate(csd = cumsum(.data$deaths),
+                  yll_cast_forwards = purrr::map2_dbl(row_number(),  (lifespan - ((age_upper + age_lower) / 2)), yll_cast_forward, cumulative_deaths = csd)) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(dalys = yld + yll_cast_forwards) %>%
+    dplyr::select(-csd)
 }
 
 #' Add some population-level indicators
