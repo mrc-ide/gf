@@ -1,0 +1,114 @@
+---
+title: "Output dictionary"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Output_dictionary}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+ISO
+  : Country iso3c code.
+  
+NAME_0
+  : Country name.
+  
+year
+  : Calendar year.
+
+pre
+  : Scenario for the period pre 2024.
+
+replenishment
+  : Budget scenario for the replenishment period (2024, 2025, 2026). This may be
+  either 1 (the Global Plan) or some proportion of the Global Plan budget.
+  
+post
+  : Scenario for the period post 2026.
+  
+age_lower
+  : Lower bound of age group. Iinclusive, i.e. bounds are [age_lower, age_upper).
+  
+age_upper
+  : Upper bound of age group. Exclusive, i.e. bounds are [age_lower, age_upper).
+  
+par
+  : Population at risk.
+  
+cases
+  : Number of clinical malaria cases.
+  
+deaths
+  : Number of malaria deaths.
+  
+life_years
+  : Life years lived.
+  
+dalys
+  : DALYS. Note, This is where a year of lost-life is accrued at a rate of one 
+  per year for each deceased person until the expected date of death of the 
+  person in the absence of the disease. It is not an accumulation at the time 
+  of death of the implied years of lost life in the future following a death. 
+  
+treatment_coverage
+  : The proportion of clinical cases that receive treatment. This includes all
+  possible healthcare provision (public, private etc.).
+  
+net_coverage
+  : This is net usage, the effective coverage of nets within the population (
+  not distribution coverage or ownership).
+  
+irs_coverage
+  : The proportion of the population protected by indoor residual spraying.
+  
+smc_coverage
+  : The proportion of the population receiving seasonal malaria chemoprevention.
+  Note this is coverage in the whole population, not the target population.
+  
+rtss_coverage
+  : The proportion of the population receiving the RTS,S vaccine.
+  Note this is coverage in the whole population, not the target population.
+  
+iptp_coverage
+  : The proportion of the population receiving intermittent preventative treatment in infants.
+  Note this is coverage in the whole population, not the target population.
+  
+iccm_coverage
+  : The proportion of the population with access to integrated community case management.
+
+diagnostic_and_treatment_cost
+  : Sum of the cost of all diagnostics and treatments. This includes diagnostics
+  and treatments for non-malarial fevers.
+  
+net_cost
+  : Cost of nets. This includes current and new-technology nets.
+
+irs_cost
+  : Cost of IRS.
+  
+smc_cost
+  : Cost of SMC.
+  
+rtss_cost
+  : Cost of RTS,S.
+
+ipti_cost
+  : Cost of IPTi
+  
+surveillance_cost
+  : Cost of surveillance activities.
+  
+elimination_cost
+  : Cost of elimination activities.
+  
+total_cost
+  :  Sum of all of the above costs.
+  
+
