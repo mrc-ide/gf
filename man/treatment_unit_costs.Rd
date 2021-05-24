@@ -5,7 +5,7 @@
 \alias{treatment_unit_costs}
 \title{Treatment unit costs}
 \format{
-An object of class \code{data.frame} with 3880 rows and 10 columns.
+An object of class \code{data.frame} with 4074 rows and 10 columns.
 }
 \usage{
 treatment_unit_costs
