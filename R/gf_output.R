@@ -16,7 +16,7 @@ gf_select <- function(x){
                   .data$net_cost, .data$irs_cost, .data$smc_cost, .data$ipti_cost,
                   .data$rtss_cost, .data$diagnostic_and_treatment_cost,
                   .data$surveillance_cost, .data$elimination_cost, .data$total_cost) %>%
-    dplyr::mutate(budget_prop = factor(budget_prop))
+    dplyr::mutate(budget_prop = factor(.data$budget_prop))
 }
 
 #' Aggregate output
