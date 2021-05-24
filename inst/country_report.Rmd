@@ -1,0 +1,175 @@
+---
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(ggplot2)
+library(patchwork)
+library(tidyr)
+library(gf)
+iso <- unique(gf_optimised$ISO)
+country <- unique(gf_optimised$NAME_0)
+```
+
+# Global Fund country report for `r country` (`r iso`)
+### Date: `r format(Sys.time(), "%d/%m/%y")`
+
+## Cases
+```{r, echo = FALSE, fig.height = 7, fig.width = 5, message = FALSE}
+cumulative_case_data <- gf_optimised %>%
+  filter(year >= 2019) %>%
+  group_by(pre, budget_prop, post) %>%
+  arrange(year, .by_group = TRUE) %>%
+  mutate(cumulative_cases = cumsum(cases))
+
+cumulative_cases <- ggplot(cumulative_case_data, aes(x = year, y = cumulative_cases / 1e6, col = budget_prop)) + 
+  geom_line() +
+  scale_colour_discrete(name = "Proportion of \nglobal plan budget") +
+  xlab("Year") +
+  ylab("Cumulative cases \n(millions, since 2019)") +
+  theme_bw() +
+  theme(legend.title = element_text(size = 10), 
+        legend.text  = element_text(size = 10),
+        legend.key.size = unit(0.5, "lines"))
+
+case_data <- gf_optimised %>%
+  filter(year >= 2016)
+
+who <- who_burden %>%
+  filter(ISO == iso, year %in% 2016:2018)
+
+case_time_series <- ggplot() + 
+  geom_line(data = case_data, aes(x = year, y = cases / 1e6, col = budget_prop)) +
+  geom_point(data = who, aes(x = year, y = cases / 1e6), col = "red") +
+  scale_colour_discrete(name = "Proportion of \nglobal plan budget") +
+  xlab("Year") +
+  ylab("Cases (millions)") +
+  theme_bw() +
+  theme(legend.title = element_text(size = 10), 
+        legend.text  = element_text(size = 10),
+        legend.key.size = unit(0.5, "lines"))
+
+cases_budget_prop <- gf_optimised %>%
+  filter(year %in% 2024:2026) %>%
+  group_by(pre, budget_prop, post) %>%
+  summarise(cases = sum(cases))
+
+cases_replenishment <- ggplot(cases_budget_prop, aes(x = budget_prop, y = cases / 1e6, fill = budget_prop)) +
+  geom_bar(stat = "identity") +
+  scale_fill_discrete(name = "Proportion of \nglobal plan budget") +
+  xlab("Proportion of global plan budget") +
+  ylab("Total cases (millions) during \nreplenishment period") +
+  theme_bw() +
+  theme(legend.title = element_text(size = 10), 
+        legend.text  = element_text(size = 10),
+        legend.key.size = unit(0.5, "lines"))
+
+print(cumulative_cases / case_time_series / cases_replenishment)
+
+```
+
+\newpage
+
+## Deaths
+```{r, echo = FALSE, fig.height = 7, fig.width = 5, message = FALSE}
+cumulative_death_data <- gf_optimised %>%
+  filter(year >= 2019) %>%
+  group_by(pre, budget_prop, post) %>%
+  arrange(year, .by_group = TRUE) %>%
+  mutate(cumulative_deaths = cumsum(deaths))
+
+cumulative_deaths <- ggplot(cumulative_death_data, aes(x = year, y = cumulative_deaths / 1000, col = budget_prop)) + 
+  geom_line() +
+  scale_colour_discrete(name = "Proportion of \nglobal plan budget") +
+  xlab("Year") +
+  ylab("Cumulative deaths \n(thousands, since 2019)") +
+  theme_bw() +
+  theme(legend.title = element_text(size = 10), 
+        legend.text  = element_text(size = 10),
+        legend.key.size = unit(0.5, "lines"))
+
+death_data <- gf_optimised %>%
+  filter(year >= 2016)
+
+death_time_series <- ggplot() + 
+  geom_line(data = death_data, aes(x = year, y = deaths / 1000, col = budget_prop)) +
+  scale_colour_discrete(name = "Proportion of \nglobal plan budget") +
+  xlab("Year") +
+  ylab("deaths (thousands)") +
+  theme_bw() +
+  theme(legend.title = element_text(size = 10), 
+        legend.text  = element_text(size = 10),
+        legend.key.size = unit(0.5, "lines"))
+
+deaths_budget_prop <- gf_optimised %>%
+  filter(year %in% 2024:2026) %>%
+  group_by(pre, budget_prop, post) %>%
+  summarise(deaths = sum(deaths))
+
+deaths_replenishment <- ggplot(deaths_budget_prop, aes(x = budget_prop, y = deaths / 1000, fill = budget_prop)) +
+  geom_bar(stat = "identity") +
+  scale_fill_discrete(name = "Proportion of \nglobal plan budget") +
+  xlab("Proportion of global plan budget") +
+  ylab("Total deaths (thousands) during \nreplenishment period") +
+  theme_bw() +
+  theme(legend.title = element_text(size = 10), 
+        legend.text  = element_text(size = 10),
+        legend.key.size = unit(0.5, "lines"))
+
+print(cumulative_deaths / death_time_series / deaths_replenishment)
+
+```
+
+\newpage
+
+## DALYS
+```{r, echo = FALSE, fig.height = 7, fig.width = 5, message = FALSE}
+cumulative_daly_data <- gf_optimised %>%
+  filter(year >= 2019) %>%
+  group_by(pre, budget_prop, post) %>%
+  arrange(year, .by_group = TRUE) %>%
+  mutate(cumulative_dalys = cumsum(dalys))
+
+cumulative_dalys <- ggplot(cumulative_daly_data, aes(x = year, y = cumulative_dalys, col = budget_prop)) + 
+  geom_line() +
+  scale_colour_discrete(name = "Proportion of \nglobal plan budget") +
+  xlab("Year") +
+  ylab("Cumulative dalys \n(millions, since 2019)") +
+  theme_bw() +
+  theme(legend.title = element_text(size = 10), 
+        legend.text  = element_text(size = 10),
+        legend.key.size = unit(0.5, "lines"))
+
+daly_data <- gf_optimised %>%
+  filter(year >= 2016)
+
+daly_time_series <- ggplot() + 
+  geom_line(data = daly_data, aes(x = year, y = dalys / 1e6, col = budget_prop)) +
+  scale_colour_discrete(name = "Proportion of \nglobal plan budget") +
+  xlab("Year") +
+  ylab("dalys (millions)") +
+  theme_bw() +
+  theme(legend.title = element_text(size = 10), 
+        legend.text  = element_text(size = 10),
+        legend.key.size = unit(0.5, "lines"))
+
+dalys_budget_prop <- gf_optimised %>%
+  filter(year %in% 2024:2026) %>%
+  group_by(pre, budget_prop, post) %>%
+  summarise(dalys = sum(dalys))
+
+dalys_replenishment <- ggplot(dalys_budget_prop, aes(x = budget_prop, y = dalys / 1e6, fill = budget_prop)) +
+  geom_bar(stat = "identity") +
+  scale_fill_discrete(name = "Proportion of \nglobal plan budget") +
+  xlab("Proportion of global plan budget") +
+  ylab("Total dalys (millions) during \nreplenishment period") +
+  theme_bw() +
+  theme(legend.title = element_text(size = 10), 
+        legend.text  = element_text(size = 10),
+        legend.key.size = unit(0.5, "lines"))
+
+print(cumulative_dalys / daly_time_series / dalys_replenishment)
+
+```

@@ -6,7 +6,7 @@
 gf_select <- function(x){
   x %>%
     dplyr::select(.data$ISO, .data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur,
-                  .data$pre, .data$replenishment, .data$post,
+                  .data$pre, .data$replenishment, .data$post, .data$budget_prop,
                   .data$year,
                   .data$age_lower, .data$age_upper,
                   .data$par,
@@ -15,7 +15,8 @@ gf_select <- function(x){
                   dplyr::contains("coverage"),
                   .data$net_cost, .data$irs_cost, .data$smc_cost, .data$ipti_cost,
                   .data$rtss_cost, .data$diagnostic_and_treatment_cost,
-                  .data$surveillance_cost, .data$elimination_cost, .data$total_cost)
+                  .data$surveillance_cost, .data$elimination_cost, .data$total_cost) %>%
+    dplyr::mutate(budget_prop = factor(budget_prop))
 }
 
 #' Aggregate output

@@ -28,7 +28,8 @@ Imports:
     rlang (>= 0.1.2),
     purrr,
     ROI,
-    ompr.roi
+    ompr.roi,
+    patchwork
 Depends: 
     R (>= 2.10),
     ROI.plugin.glpk,
