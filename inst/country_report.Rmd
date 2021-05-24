@@ -16,6 +16,53 @@ country <- unique(gf_optimised$NAME_0)
 # Global Fund country report for `r country` (`r iso`)
 ### Date: `r format(Sys.time(), "%d/%m/%y")`
 
+\    
+\    
+
+
+## Interventions
+
+```{r, echo = FALSE, fig.height = 4, fig.width = 6, message = FALSE}
+interventions_budget_prop <- gf_optimised %>%
+  select(year, pre, budget_prop, post, par,
+         treatment_coverage, net_coverage, irs_coverage, smc_coverage, ipti_coverage, rtss_coverage) %>%
+  filter(year %in% 2024:2026) %>%
+  select(-year) %>%
+  group_by(pre, budget_prop, post) %>%
+  pivot_longer(-c(pre, budget_prop, post, par), names_to = "intervention", values_to = "coverage") %>%
+  mutate(intervention = factor(intervention, 
+                               levels = c("treatment_coverage",
+                                          "net_coverage",
+                                          "irs_coverage",
+                                          "smc_coverage",
+                                          "ipti_coverage",
+                                          "rtss_coverage"),
+                               labels = c("Treatment",
+                                          "Nets",
+                                          "IRS", 
+                                          "SMC",
+                                          "IPTi",
+                                          "RTS,S"))) %>%
+  group_by(pre, budget_prop, post, intervention) %>%
+  summarise(coverage = weighted.mean(coverage, par)) %>%
+  mutate(budget_prop = factor(budget_prop))
+
+interventions_replenishment <- ggplot(interventions_budget_prop, aes(x = budget_prop, y = coverage, fill = intervention)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_discrete(name = "") +
+  xlab("Proportion of global plan budget") +
+  ylab("Effective coverage") +
+  theme_bw() +
+  theme(legend.title = element_text(size = 10), 
+        legend.text  = element_text(size = 10),
+        legend.key.size = unit(0.5, "lines"))
+
+print(interventions_replenishment)
+
+```
+
+\newpage
+
 ## Cases
 ```{r, echo = FALSE, fig.height = 7, fig.width = 5, message = FALSE}
 cumulative_case_data <- gf_optimised %>%
