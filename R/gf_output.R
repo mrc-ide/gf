@@ -40,6 +40,7 @@ gf_aggregate <- function(x, ...){
               irs_coverage = stats::weighted.mean(.data$irs_coverage, .data$par),
               smc_coverage = stats::weighted.mean(.data$smc_coverage, .data$par),
               rtss_coverage = stats::weighted.mean(.data$rtss_coverage, .data$par),
+              ipti_coverage = stats::weighted.mean(.data$ipti_coverage, .data$par),
               iptp_coverage = stats::weighted.mean(.data$iptp_coverage, .data$par),
               iccm_coverage = stats::weighted.mean(.data$iccm_coverage, .data$par),
               diagnostic_and_treatment_cost = sum(.data$diagnostic_and_treatment_cost),
@@ -52,5 +53,6 @@ gf_aggregate <- function(x, ...){
               elimination_cost = sum(.data$elimination_cost),
               total_cost = sum(.data$total_cost),
               par = sum(.data$par)
-    )
+    ) %>%
+    dplyr::ungroup()
 }
