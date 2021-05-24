@@ -88,7 +88,7 @@ create_intervention_option_matrix <- function(ref_year){
 create_coverage <- function(tx, llin, irs, smc, rtss, iccm, ipti, gp_interventions){
   # Assume treatment coverage never falls completely to 0
   if(tx == 0){
-    gp_interventions[gp_interventions$year %in% c(2024:2026), "treatment_coverage"] <- 0.2
+    gp_interventions[gp_interventions$year %in% c(2024:2026), "treatment_coverage"] <- 0.1
   }
   if(llin == 0){
     gp_interventions[gp_interventions$year %in% c(2024:2026), "net_coverage"] <- 0

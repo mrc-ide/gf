@@ -1,7 +1,7 @@
 test_that("costs", {
   df <- data.frame(ISO = "AGO",
                    year = 2020,
-                   age_lower = 0,
+                   age_lower = 1,
                    age_upper = 5,
                    par = 1000,
                    target_use = 0.6,
