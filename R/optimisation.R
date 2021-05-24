@@ -148,23 +148,23 @@ multi_optimisation <- function(x, budget_prop){
   out <- list()
   for(i in seq_along(budgets)){
     if(budget_prop[i] == 1){
-      out[[i]] <- dplyr::filter(x, .data$replenishment == "gp")
+      out[[i]] <- dplyr::filter(x, .data$replenishment == "gp") %>%
+        dplyr::mutate(budget = budgets[i],
+                      budget_prop = budget_prop[i])
     } else {
       if(budgets[i] >= min_budget_first_phase){
-        out[[i]] <- single_optimisation(first_phase_data, budgets[i])
+        out[[i]] <- single_optimisation(first_phase_data, budgets[i]) %>%
+          dplyr::mutate(budget = budgets[i],
+                        budget_prop = budget_prop[i]) 
       } else {
         if(budgets[i] < min_budget_second_phase){
           message("Incompatible budget found")
-          out[[i]] <- NULL
         } else {
-          out[[i]] <- single_optimisation(second_phase_data, budgets[i])
+          out[[i]] <- single_optimisation(second_phase_data, budgets[i]) %>%
+            dplyr::mutate(budget = budgets[i],
+                          budget_prop = budget_prop[i])
         }
       }
-    }
-    if(!is.null(out[[i]])){
-      out[[i]] <- out[[i]] %>%
-        dplyr::mutate(budget = budgets[i],
-                      budget_prop = budget_prop[i])
     }
   }
   return(out)
