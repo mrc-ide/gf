@@ -136,6 +136,14 @@ multi_optimisation <- function(x, budget_prop){
   # In the second phase (when first phase not affordable) all interventions except treatment have been removed
   second_phase_data <- x %>%
     dplyr::filter(.data$replenishment %in% c("tx", "none"))
+  # Estimate the minimum budget required to obtain a second phase solution
+  min_budget_second_phase <- second_phase_data %>%
+    dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur) %>%
+    dplyr::filter(.data$cost == min(.data$cost)) %>%
+    dplyr::slice(1) %>%
+    dplyr::ungroup() %>%
+    dplyr::pull(.data$cost) %>%
+    sum()
   # Run the optimisation for all budgets (if budget prop == 1 we "force" the GP solution currently)
   out <- list()
   for(i in seq_along(budgets)){
@@ -145,6 +153,9 @@ multi_optimisation <- function(x, budget_prop){
       if(budgets[i] >= min_budget_first_phase){
         out[[i]] <- single_optimisation(first_phase_data, budgets[i])
       } else {
+        if(budgets[i] < min_budget_second_phase){
+          out[[i]] <- NULL
+        }
         out[[i]] <- single_optimisation(second_phase_data, budgets[i])
       }
     }
