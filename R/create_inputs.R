@@ -62,8 +62,9 @@ coverage_options <- function(reference_coverage){
 #' Binary indcator if intervention is to be implemented (at GP coverage) or not
 #'
 #' @param ref_year Interventions for the GP year 2026
-create_intervention_option_matrix <- function(ref_year){
-  sub_coverage_options <- expand.grid(tx = coverage_options(ref_year$treatment_coverage),
+#' @param tx_options Treatment coverage options
+create_intervention_option_matrix <- function(ref_year, tx_options = c(0, 0.25, 0.5, 0.75)){
+  sub_coverage_options <- expand.grid(tx = c(tx_options[tx_options < ref_year$treatment_coverage], 1),
                                       llin = coverage_options(ref_year$net_coverage),
                                       irs = coverage_options(ref_year$irs_coverage),
                                       smc = coverage_options(ref_year$smc_coverage),
@@ -86,9 +87,8 @@ create_intervention_option_matrix <- function(ref_year){
 #' @param ipti  Binary indicator for ipti
 #' @param gp_interventions intervention data.frame from the GP
 create_coverage <- function(tx, llin, irs, smc, rtss, iccm, ipti, gp_interventions){
-  # Assume treatment coverage never falls completely to 0
-  if(tx == 0){
-    gp_interventions[gp_interventions$year %in% c(2024:2026), "treatment_coverage"] <- 0.1
+  if(tx < 1){
+    gp_interventions[gp_interventions$year %in% c(2024:2026), "treatment_coverage"] <- tx
   }
   if(llin == 0){
     gp_interventions[gp_interventions$year %in% c(2024:2026), "net_coverage"] <- 0
@@ -114,9 +114,14 @@ create_coverage <- function(tx, llin, irs, smc, rtss, iccm, ipti, gp_interventio
 #' Create the replenishment naming scheme indicating which interventions are on and off during the replenishment period
 #'
 #' @param intervention_binary_options Binary indicator if intervention is on or off
-#' @param names Intervention names
-create_names <- function(intervention_binary_options, names){
-  out <- paste(names[intervention_binary_options == 1], collapse = "_")
+create_names <- function(intervention_binary_options){
+  tx <- NULL
+  if(intervention_binary_options["tx"] > 0){
+    tx <- paste0("tx", 100 * intervention_binary_options["tx"])
+  }
+  intervention_binary_options <- intervention_binary_options[2:6]
+  names <- names(intervention_binary_options)
+  out <- paste(c(tx, names[intervention_binary_options == 1]), collapse = "_")
   if(out == ""){
     out <- "none"
   }
@@ -135,7 +140,7 @@ replenishment_options <- function(gp_input_single){
   # Create modified intervention inputs for each set of intervention options
   intervention_options <- c(purrr::pmap(intervention_option_matrix, create_coverage, gp_interventions = gp_input_single$interventions[[1]]), gp_input_single$interventions)
   # Create a unique name for each set of modified intervention inputs
-  replenishment_names <- c(apply(intervention_option_matrix, 1, create_names, names = names(intervention_option_matrix)), "gp")
+  replenishment_names <- c(apply(intervention_option_matrix, 1, create_names), "gp")
   # Create the full set of inputs for each set of modified intervention inputs
   output <- gp_input_single[rep(1, length(intervention_options)),] %>%
     dplyr::mutate(pre = "gp",

@@ -122,9 +122,9 @@ single_optimisation <- function(x, budget){
 multi_optimisation <- function(x, budget_prop){
   budgets <- sum(dplyr::filter(x, .data$replenishment == "gp")$cost) * budget_prop
   
-  # In the first phase (when affordable) all solutions must include treatment
+  # In the first phase (when affordable) all solutions must include (nax) treatment
   first_phase_data <- x %>%
-    dplyr::filter(grepl("tx", .data$replenishment) | grepl("gp", .data$replenishment))
+    dplyr::filter(grepl("tx100", .data$replenishment) | grepl("gp", .data$replenishment))
   # Estimate the minimum budget required to obtain a first phase solution
   min_budget_first_phase <- first_phase_data %>%
     dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur) %>%
@@ -135,7 +135,7 @@ multi_optimisation <- function(x, budget_prop){
     sum()
   # In the second phase (when first phase not affordable) all interventions except treatment have been removed
   second_phase_data <- x %>%
-    dplyr::filter(.data$replenishment %in% c("tx", "none"))
+    dplyr::filter(.data$replenishment %in% c("tx25", "tx50", "tx75", "tx100", "none"))
   # Estimate the minimum budget required to obtain a second phase solution
   min_budget_second_phase <- second_phase_data %>%
     dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur) %>%
