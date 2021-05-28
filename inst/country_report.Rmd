@@ -215,7 +215,7 @@ dalys_budget_prop <- gf_optimised %>%
             dalys_lower = sum(dalys_lower),
             dalys_upper = sum(dalys_upper))
 
-dalys_replenishment <- ggplot(dalys_budget_prop, aes(x = budget_prop, y = dalys / 1e6, fill = budget_prop, ymin = dalys_lower, ymax = dalys_upper)) +
+dalys_replenishment <- ggplot(dalys_budget_prop, aes(x = budget_prop, y = dalys / 1e6, fill = budget_prop, ymin = dalys_lower / 1e6, ymax = dalys_upper / 1e6)) +
   geom_bar(stat = "identity") +
   geom_linerange() +
   scale_fill_discrete(name = "Proportion of \nglobal plan budget") +
