@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+
+
 ISO
   : Country iso3c code.
   
@@ -34,7 +36,7 @@ post
   : Scenario for the period post 2026.
   
 age_lower
-  : Lower bound of age group. Iinclusive, i.e. bounds are [age_lower, age_upper).
+  : Lower bound of age group. Inclusive, i.e. bounds are [age_lower, age_upper).
   
 age_upper
   : Upper bound of age group. Exclusive, i.e. bounds are [age_lower, age_upper).
@@ -43,19 +45,20 @@ par
   : Population at risk.
   
 cases
-  : Number of clinical malaria cases.
+  : Number of clinical malaria cases. The 95% uncertainty intervals are denoted by _lower and _upper suffixes.
   
 deaths
-  : Number of malaria deaths.
+  : Number of malaria deaths. The 95% uncertainty intervals are denoted by _lower and _upper suffixes.
   
 life_years
-  : Life years lived.
+  : Life years lived. The 95% uncertainty intervals are denoted by _lower and _upper suffixes.
   
 dalys
   : DALYS. Note, This is where a year of lost-life is accrued at a rate of one 
   per year for each deceased person until the expected date of death of the 
   person in the absence of the disease. It is not an accumulation at the time 
   of death of the implied years of lost life in the future following a death. 
+  The 95% uncertainty intervals are denoted by _lower and _upper suffixes.
   
 treatment_coverage
   : The proportion of clinical cases that receive treatment. This includes all
