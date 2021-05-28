@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Annual nets distributed — annual_net_distibuted_gts • gf</title>
+<title>Add coverage of either net or IRS. These are modelled as -ve correlated so
+the coverage is their sum (to max of 100%) — any_vc_coverage • gf</title>
 
 
 <!-- jquery -->
@@ -39,14 +40,10 @@
 
 
 
-<meta property="og:title" content="Annual nets distributed — annual_net_distibuted_gts" />
-<meta property="og:description" content="The annual number of nets distributed to maintain the input equilibrium nets per capita.
-This is for the specific &quot;smoothed&quot; case where we assume that 1/3 of the population at risk
-is distributed nets every 3 years (this is equivalent to a smoothed 3 yearly whole population distribution).
-This version is a simplified approximation with 3 values for proportion of nets remaining (1, 2, 3 years) scraped from
-Bhatt et al, 2015. We use this approach for consistency with GTS.
-For a full approach with more updated fits see annual_net_distibuted. This newer approach is slightly more
-optimistic than this approach (although overall uncertainty in these projections is large)." />
+<meta property="og:title" content="Add coverage of either net or IRS. These are modelled as -ve correlated so
+the coverage is their sum (to max of 100%) — any_vc_coverage" />
+<meta property="og:description" content="Add coverage of either net or IRS. These are modelled as -ve correlated so
+the coverage is their sum (to max of 100%)" />
 
 
 
@@ -124,29 +121,25 @@ optimistic than this approach (although overall uncertainty in these projections
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Annual nets distributed</h1>
+    <h1>Add coverage of either net or IRS. These are modelled as -ve correlated so
+the coverage is their sum (to max of 100%)</h1>
     
-    <div class="hidden name"><code>annual_net_distibuted_gts.Rd</code></div>
+    <div class="hidden name"><code>any_vc_coverage.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The annual number of nets distributed to maintain the input equilibrium nets per capita.
-This is for the specific "smoothed" case where we assume that 1/3 of the population at risk
-is distributed nets every 3 years (this is equivalent to a smoothed 3 yearly whole population distribution).
-This version is a simplified approximation with 3 values for proportion of nets remaining (1, 2, 3 years) scraped from
-<a href='https://elifesciences.org/articles/09672#app1'>Bhatt <em>et al</em>, 2015</a>. We use this approach for consistency with GTS.
-For a full approach with more updated fits see <code><a href='annual_net_distibuted.html'>annual_net_distibuted</a></code>. This newer approach is slightly more
-optimistic than this approach (although overall uncertainty in these projections is large).</p>
+    <p>Add coverage of either net or IRS. These are modelled as -ve correlated so
+the coverage is their sum (to max of 100%)</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>annual_net_distibuted_gts</span><span class='op'>(</span><span class='va'>eq_npc</span><span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>any_vc_coverage</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>eq_npc</th>
-      <td><p>Equilibrium nets per capita</p></td>
+      <th>x</th>
+      <td><p>Model output</p></td>
     </tr>
     </table>
 
