@@ -8,6 +8,7 @@ epi_post_processing <- function(x){
     severe_cases() %>%
     mortality_rate() %>%
     deaths() %>%
+    outcome_uncertainty() %>%
     non_malarial_fevers() %>%
     population_indicators() %>%
     daly_components(lifespan = 63) %>%
@@ -94,9 +95,17 @@ daly_components <- function(x, lifespan = 63,
                             severe_weight = 0.6){
   x %>%
     dplyr::mutate(yll = .data$deaths * (lifespan - ((.data$age_lower + .data$age_upper) / 2)),
+                  yll_lower = .data$deaths_lower * (lifespan - ((.data$age_lower + .data$age_upper) / 2)),
+                  yll_upper = .data$deaths_upper * (lifespan - ((.data$age_lower + .data$age_upper) / 2)),
                   yld = dplyr::case_when(.data$age_upper <= 5 ~ .data$cases * episode_length * weight1 + .data$severe_cases * severe_episode_length * severe_weight,
                                          .data$age_upper > 5 & .data$age_upper <= 15 ~ .data$cases * episode_length * weight2 + .data$severe_cases * severe_episode_length * severe_weight,
-                                         .data$age_upper > 15 ~ .data$cases * episode_length * weight3 + .data$severe_cases * severe_episode_length * severe_weight))
+                                         .data$age_upper > 15 ~ .data$cases * episode_length * weight3 + .data$severe_cases * severe_episode_length * severe_weight),
+                  yld_lower = dplyr::case_when(.data$age_upper <= 5 ~ .data$cases_lower * episode_length * weight1 + .data$severe_cases * severe_episode_length * severe_weight,
+                                         .data$age_upper > 5 & .data$age_upper <= 15 ~ .data$cases_lower * episode_length * weight2 + .data$severe_cases * severe_episode_length * severe_weight,
+                                         .data$age_upper > 15 ~ .data$cases_lower * episode_length * weight3 + .data$severe_cases * severe_episode_length * severe_weight),
+                  yld_upper = dplyr::case_when(.data$age_upper <= 5 ~ .data$cases_upper * episode_length * weight1 + .data$severe_cases * severe_episode_length * severe_weight,
+                                         .data$age_upper > 5 & .data$age_upper <= 15 ~ .data$cases_upper * episode_length * weight2 + .data$severe_cases * severe_episode_length * severe_weight,
+                                         .data$age_upper > 15 ~ .data$cases_upper * episode_length * weight3 + .data$severe_cases * severe_episode_length * severe_weight))
 }
 
 #' Add Life years lived
@@ -106,7 +115,9 @@ daly_components <- function(x, lifespan = 63,
 #' @param x Model output
 life_years <- function(x){
   x %>%
-    dplyr::mutate(life_years = 1 * (.data$par - .data$deaths) + 0.5 * .data$deaths)
+    dplyr::mutate(life_years = 1 * (.data$par - .data$deaths) + 0.5 * .data$deaths,
+                  life_years_lower = 1 * (.data$par - .data$deaths_lower) + 0.5 * .data$deaths_lower,
+                  life_years_upper = 1 * (.data$par - .data$deaths_upper) + 0.5 * .data$deaths_upper)
 }
 
 
@@ -135,10 +146,16 @@ dalys_cast_forward <- function(x, lifespan, ...){
     dplyr::group_by(...) %>%
     dplyr::arrange(.data$year, .by_group = TRUE) %>%
     dplyr::mutate(csd = cumsum(.data$deaths),
-                  yll_cast_forwards = purrr::map2_dbl(dplyr::row_number(),  (lifespan - ((.data$age_upper + .data$age_lower) / 2)), yll_cast_forward, cumulative_deaths = .data$csd)) %>%
+                  yll_cast_forwards = purrr::map2_dbl(dplyr::row_number(),  (lifespan - ((.data$age_upper + .data$age_lower) / 2)), yll_cast_forward, cumulative_deaths = .data$csd),
+                  csd_lower = cumsum(.data$deaths_lower),
+                  yll_cast_forwards_lower = purrr::map2_dbl(dplyr::row_number(),  (lifespan - ((.data$age_upper + .data$age_lower) / 2)), yll_cast_forward, cumulative_deaths = .data$csd_lower),
+                  csd_upper = cumsum(.data$deaths_upper),
+                  yll_cast_forwards_upper = purrr::map2_dbl(dplyr::row_number(),  (lifespan - ((.data$age_upper + .data$age_lower) / 2)), yll_cast_forward, cumulative_deaths = .data$csd_upper)) %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(dalys = .data$yld + .data$yll_cast_forwards) %>%
-    dplyr::select(-.data$csd)
+    dplyr::mutate(dalys = .data$yld + .data$yll_cast_forwards,
+                  dalys_lower= .data$yld_lower + .data$yll_cast_forwards_lower,
+                  dalys_upper = .data$yld_upper + .data$yll_cast_forwards_upper) %>%
+    dplyr::select(-.data$csd, -.data$csd_lower, -.data$csd_upper)
 }
 
 #' Add some population-level indicators
@@ -155,4 +172,17 @@ population_indicators <- function(x){
     dplyr::mutate(population_prevalence = ifelse(sum(.data$par) ==0, 0, stats::weighted.mean(.data$prev, .data$par)),
                   population_api = ifelse(sum(.data$par) ==0, 0, (sum(.data$cases) / sum(.data$par)) * 365)) %>%
     dplyr::ungroup()
+}
+
+#' Add case and death uncertainty
+#'
+#' @param x  Model output
+#' @param cases_cv Case uncertainty SD scaler
+#' @param deaths_cv Death uncertainty SD scaler
+outcome_uncertainty <- function(x, cases_cv = 0.227, deaths_cv = 0.265){
+  x %>%
+    dplyr::mutate(cases_lower = round(pmax(0, stats::qnorm(0.025, .data$cases, .data$cases * cases_cv))),
+                  cases_upper = round(stats::qnorm(0.975, .data$cases, .data$cases * cases_cv)),
+                  deaths_lower = round(pmax(0, stats::qnorm(0.025, .data$deaths, .data$deaths * deaths_cv))),
+                  deaths_upper = round(stats::qnorm(0.975, .data$deaths, .data$deaths * deaths_cv)))
 }

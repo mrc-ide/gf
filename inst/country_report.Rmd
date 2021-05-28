@@ -101,10 +101,13 @@ case_time_series <- ggplot() +
 cases_budget_prop <- gf_optimised %>%
   filter(year %in% 2024:2026) %>%
   group_by(pre, budget_prop, post) %>%
-  summarise(cases = sum(cases))
+  summarise(cases = sum(cases),
+            cases_lower = sum(cases_lower),
+            cases_upper = sum(cases_upper))
 
-cases_replenishment <- ggplot(cases_budget_prop, aes(x = budget_prop, y = cases / 1e6, fill = budget_prop)) +
+cases_replenishment <- ggplot(cases_budget_prop, aes(x = budget_prop, y = cases / 1e6, fill = budget_prop, ymin = cases_lower / 1e6, ymax = cases_upper / 1e6)) +
   geom_bar(stat = "identity") +
+  geom_linerange() +
   scale_fill_discrete(name = "Proportion of \nglobal plan budget") +
   xlab("Proportion of global plan budget") +
   ylab("Total cases (millions) during \nreplenishment period") +
@@ -153,10 +156,13 @@ death_time_series <- ggplot() +
 deaths_budget_prop <- gf_optimised %>%
   filter(year %in% 2024:2026) %>%
   group_by(pre, budget_prop, post) %>%
-  summarise(deaths = sum(deaths))
+  summarise(deaths = sum(deaths),
+            deaths_lower = sum(deaths_lower),
+            deaths_upper = sum(deaths_upper))
 
-deaths_replenishment <- ggplot(deaths_budget_prop, aes(x = budget_prop, y = deaths / 1000, fill = budget_prop)) +
+deaths_replenishment <- ggplot(deaths_budget_prop, aes(x = budget_prop, y = deaths / 1000, fill = budget_prop, ymin = deaths_lower / 1000, ymax = deaths_upper / 1000)) +
   geom_bar(stat = "identity") +
+  geom_linerange() +
   scale_fill_discrete(name = "Proportion of \nglobal plan budget") +
   xlab("Proportion of global plan budget") +
   ylab("Total deaths (thousands) during \nreplenishment period") +
@@ -205,10 +211,13 @@ daly_time_series <- ggplot() +
 dalys_budget_prop <- gf_optimised %>%
   filter(year %in% 2024:2026) %>%
   group_by(pre, budget_prop, post) %>%
-  summarise(dalys = sum(dalys))
+  summarise(dalys = sum(dalys),
+            dalys_lower = sum(dalys_lower),
+            dalys_upper = sum(dalys_upper))
 
-dalys_replenishment <- ggplot(dalys_budget_prop, aes(x = budget_prop, y = dalys / 1e6, fill = budget_prop)) +
+dalys_replenishment <- ggplot(dalys_budget_prop, aes(x = budget_prop, y = dalys / 1e6, fill = budget_prop, ymin = dalys_lower, ymax = dalys_upper)) +
   geom_bar(stat = "identity") +
+  geom_linerange() +
   scale_fill_discrete(name = "Proportion of \nglobal plan budget") +
   xlab("Proportion of global plan budget") +
   ylab("Total dalys (millions) during \nreplenishment period") +

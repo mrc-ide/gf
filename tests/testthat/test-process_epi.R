@@ -29,6 +29,13 @@ test_that("Process epi works", {
   expect_equal(df$deaths, round(df$mortality_rate * df$par))
   
   df <- df %>%
+    outcome_uncertainty()
+  expect_equal(df$cases_lower, round(pmax(0, qnorm(0.025, df$cases, df$cases * 0.227))))
+  expect_equal(df$cases_upper, round(qnorm(0.975, df$cases, df$cases * 0.227)))
+  expect_equal(df$deaths_lower, round(pmax(0, qnorm(0.025, df$deaths, df$deaths * 0.265))))
+  expect_equal(df$deaths_upper, round(qnorm(0.975, df$deaths, df$deaths * 0.265)))
+  
+  df <- df %>%
     non_malarial_fevers()
   expect_equal(df$non_malarial_fevers, ifelse(df$age_upper == 5, 3.4 * df$par, df$par))
   
