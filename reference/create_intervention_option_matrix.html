@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gf</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.11</span>
       </span>
     </div>
 
@@ -127,7 +127,7 @@
     <p>Binary indcator if intervention is to be implemented (at GP coverage) or not</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>create_intervention_option_matrix</span><span class='op'>(</span><span class='va'>ref_year</span><span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>create_intervention_option_matrix</span><span class='op'>(</span><span class='va'>ref_year</span>, tx_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.25</span>, <span class='fl'>0.5</span>, <span class='fl'>0.75</span><span class='op'>)</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,6 +135,10 @@
     <tr>
       <th>ref_year</th>
       <td><p>Interventions for the GP year 2026</p></td>
+    </tr>
+    <tr>
+      <th>tx_options</th>
+      <td><p>Treatment coverage options</p></td>
     </tr>
     </table>
 
