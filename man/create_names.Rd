@@ -4,12 +4,10 @@
 \alias{create_names}
 \title{Create the replenishment naming scheme indicating which interventions are on and off during the replenishment period}
 \usage{
-create_names(intervention_binary_options, names)
+create_names(intervention_binary_options)
 }
 \arguments{
 \item{intervention_binary_options}{Binary indicator if intervention is on or off}
-
-\item{names}{Intervention names}
 }
 \description{
 Create the replenishment naming scheme indicating which interventions are on and off during the replenishment period

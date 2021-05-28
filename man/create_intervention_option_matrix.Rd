@@ -4,10 +4,12 @@
 \alias{create_intervention_option_matrix}
 \title{Create matrix of coverage options}
 \usage{
-create_intervention_option_matrix(ref_year)
+create_intervention_option_matrix(ref_year, tx_options = c(0, 0.25, 0.5, 0.75))
 }
 \arguments{
 \item{ref_year}{Interventions for the GP year 2026}
+
+\item{tx_options}{Treatment coverage options}
 }
 \description{
 Binary indcator if intervention is to be implemented (at GP coverage) or not
