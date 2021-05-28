@@ -119,7 +119,7 @@ create_names <- function(intervention_binary_options){
   if(intervention_binary_options["tx"] > 0){
     tx <- paste0("tx", 100 * intervention_binary_options["tx"])
   }
-  intervention_binary_options <- intervention_binary_options[2:6]
+  intervention_binary_options <- intervention_binary_options[2:7]
   names <- names(intervention_binary_options)
   out <- paste(c(tx, names[intervention_binary_options == 1]), collapse = "_")
   if(out == ""){
