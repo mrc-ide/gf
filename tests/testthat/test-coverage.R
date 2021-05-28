@@ -27,3 +27,13 @@ test_that("age_specific_coverage", {
   expect_equal(df_adj$ipti_coverage, c(0.8 * (2 - 0.25) / 5, 0))
   expect_equal(df_adj$rtss_coverage, c(0.8 * (1.5 - 0.125) / 5, 0))
 })
+
+
+test_that("age vector control coverage", {
+  df <- data.frame(net_coverage = c(0, 0.25,  0.5, 0.75),
+                   irs_coverage = c(0, 0.25, 0.5, 0.75))
+  
+  df_adj <- any_vc_coverage(df)
+  
+  expect_equal(df_adj$vector_control_coverage, c(0, 0.5, 1, 1))
+})

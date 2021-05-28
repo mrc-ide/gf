@@ -50,6 +50,7 @@ gf_aggregate <- function(x, ...){
       treatment_coverage = stats::weighted.mean(.data$treatment_coverage, .data$par),
       net_coverage = stats::weighted.mean(.data$net_coverage, .data$par),
       irs_coverage = stats::weighted.mean(.data$irs_coverage, .data$par),
+      vector_control_coverage = stats::weighted.mean(.data$vector_control_coverage, .data$par),
       smc_coverage = stats::weighted.mean(.data$smc_coverage, .data$par),
       rtss_coverage = stats::weighted.mean(.data$rtss_coverage, .data$par),
       ipti_coverage = stats::weighted.mean(.data$ipti_coverage, .data$par),

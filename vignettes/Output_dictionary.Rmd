@@ -71,6 +71,9 @@ net_coverage
 irs_coverage
   : The proportion of the population protected by indoor residual spraying.
   
+vector_control_coverage
+  : The proportion of the population protected by any vector control (net or IRS).
+  
 smc_coverage
   : The proportion of the population receiving seasonal malaria chemoprevention.
   Note this is coverage in the whole population, not the target population.

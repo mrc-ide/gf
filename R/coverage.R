@@ -37,3 +37,12 @@ age_specific_coverage <- function(x, smc_age_lower = 0.5, smc_age_upper = 5, ipt
     )
 }
 
+#' Add coverage of either net or IRS. These are modelled as -ve correlated so
+#' the coverage is their sum (to max of 100%)
+#'
+#' @param x  Model output
+any_vc_coverage <- function(x){
+  x %>%
+    dplyr::mutate(vector_control_coverage = pmin(.data$net_coverage + .data$irs_coverage, 1))
+}
+
