@@ -5,7 +5,7 @@
 \alias{use_npc}
 \title{Use to npc}
 \format{
-An object of class \code{data.frame} with 360 rows and 3 columns.
+An object of class \code{data.frame} with 594 rows and 3 columns.
 }
 \usage{
 use_npc
