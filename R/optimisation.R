@@ -4,7 +4,7 @@
 #'
 #' @return Data for use in optimisation
 #' @export
-create_optimisation_data <- function(processed_output, incidence_threshold = 0){
+create_optimisation_data <- function(processed_output){
   processed_output %>%
     dplyr::filter(.data$year %in% 2024:2026) %>%
     dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur, .data$pre, .data$replenishment) %>%
