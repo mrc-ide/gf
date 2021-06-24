@@ -169,7 +169,7 @@ dalys_cast_forward <- function(x, lifespan, ...){
 population_indicators <- function(x){
   x %>%
     dplyr::group_by(.data$Continent, .data$ISO, .data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur, .data$pre, .data$replenishment, .data$post, .data$year) %>%
-    dplyr::mutate(population_prevalence = ifelse(sum(.data$par) ==0, 0, stats::weighted.mean(.data$prev, .data$par)),
+    dplyr::mutate(population_prevalence = ifelse(sum(.data$par) == 0, 0, stats::weighted.mean(.data$prev, .data$par)),
                   population_api = ifelse(sum(.data$par) ==0, 0, (sum(.data$cases) / sum(.data$par)) * 365)) %>%
     dplyr::ungroup()
 }
@@ -185,4 +185,10 @@ outcome_uncertainty <- function(x, cases_cv = 0.227, deaths_cv = 0.265){
                   cases_upper = round(stats::qnorm(0.975, .data$cases, .data$cases * cases_cv)),
                   deaths_lower = round(pmax(0, stats::qnorm(0.025, .data$deaths, .data$deaths * deaths_cv))),
                   deaths_upper = round(stats::qnorm(0.975, .data$deaths, .data$deaths * deaths_cv)))
+}
+
+# Assume this is for a single instance of the lowest level site:
+elimination_epi_threshold_adjustment <- function(x, threshold = x){
+  
+  
 }

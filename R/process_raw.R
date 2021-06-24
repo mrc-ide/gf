@@ -40,11 +40,15 @@ model_output_to_long <- function(x, ...){
 #' Raw output pre-processing wrapper
 #'
 #' @param raw_output Raw model output
+#' @param threshold Incidence threshold below which outputs are fixed
+#' @param coverage_input_address Address of coverage input data
 #' @param ... Additional columns to select (for example run names)
 #'
 #' @return Pre-processed model output
 #' @export
-process_raw <- function(raw_output, ...){
+process_raw <- function(raw_output, threshold = 0, coverage_input_address, ...){
+  coverage_input <- readRDS(coverage_input_address)
+  
   raw_output %>%
     # Dropping non_smooth output and intervention number output
     dplyr::select(..., .data$year, dplyr::contains("smooth")) %>%
@@ -53,7 +57,16 @@ process_raw <- function(raw_output, ...){
     # Formatting
     model_output_to_long(...) %>%
     # Replace -999
-    replace_missing()
+    replace_missing() %>%
+    # Process epi and coverage and costs  
+    link_data(coverage_input) %>%
+    any_vc_coverage() %>%
+    elim_threshold(threshold = threshold) %>%
+    epi_post_processing() %>%
+    commodities_and_services() %>%
+    component_costs() %>%
+    category_costs() %>%
+    prune()
 }
 
 

@@ -7,7 +7,7 @@
 prune(x)
 }
 \arguments{
-\item{x}{model_output Model output}
+\item{x}{Model output}
 }
 \description{
 Keep only required columns - helps for memory issues with large countries
