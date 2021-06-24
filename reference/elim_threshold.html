@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Post processing wrapper — post_process • gf</title>
+<title>Elimination threshold — elim_threshold • gf</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Post processing wrapper — post_process" />
-<meta property="og:description" content="Links to data, estimates epi, commodity and cost outputs" />
+<meta property="og:title" content="Elimination threshold — elim_threshold" />
+<meta property="og:description" content="Elimination threshold" />
 
 
 
@@ -55,7 +55,6 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
 
 
 
@@ -118,27 +117,27 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Post processing wrapper</h1>
+    <h1>Elimination threshold</h1>
     
-    <div class="hidden name"><code>post_process.Rd</code></div>
+    <div class="hidden name"><code>elim_threshold.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Links to data, estimates epi, commodity and cost outputs</p>
+    <p>Elimination threshold</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>post_process</span><span class='op'>(</span><span class='va'>model_output</span>, <span class='va'>coverage_input</span><span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>elim_threshold</span><span class='op'>(</span><span class='va'>x</span>, threshold <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>model_output</th>
-      <td><p>Model output</p></td>
+      <th>x</th>
+      <td><p>output</p></td>
     </tr>
     <tr>
-      <th>coverage_input</th>
-      <td><p>Coverage input</p></td>
+      <th>threshold</th>
+      <td><p>Incidence threshold below which outputs are fixed</p></td>
     </tr>
     </table>
 

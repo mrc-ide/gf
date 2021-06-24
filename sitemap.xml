@@ -76,6 +76,9 @@
     <loc>/reference/dominant.html</loc>
   </url>
   <url>
+    <loc>/reference/elim_threshold.html</loc>
+  </url>
+  <url>
     <loc>/reference/epi_post_processing.html</loc>
   </url>
   <url>
@@ -137,9 +140,6 @@
   </url>
   <url>
     <loc>/reference/population_projections.html</loc>
-  </url>
-  <url>
-    <loc>/reference/post_process.html</loc>
   </url>
   <url>
     <loc>/reference/ppf.html</loc>
