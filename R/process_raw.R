@@ -48,10 +48,10 @@ model_output_to_long <- function(x, ...){
 #' @export
 process_raw <- function(raw_output, threshold = 0, input_address, ...){
   coverage_input <- readRDS(input_address) %>%
-    dplyr::select(data$Continent, data$ISO, data$NAME_0, data$NAME_1,
-                  data$NAME_2, data$ur, data$pre, data$replenishment,
-                  data$post, data$interventions) %>%
-    tidyr::unnest(col = c(data$interventions))
+    dplyr::select(.data$Continent, .data$ISO, .data$NAME_0, .data$NAME_1,
+                  .data$NAME_2, .data$ur, .data$pre, .data$replenishment,
+                  .data$post, .data$interventions) %>%
+    tidyr::unnest(col = c(.data$interventions))
   
   raw_output %>%
     # Dropping non_smooth output and intervention number output
