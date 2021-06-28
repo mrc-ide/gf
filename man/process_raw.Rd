@@ -4,14 +4,14 @@
 \alias{process_raw}
 \title{Raw output pre-processing wrapper}
 \usage{
-process_raw(raw_output, threshold = 0, coverage_input_address, ...)
+process_raw(raw_output, threshold = 0, input_address, ...)
 }
 \arguments{
 \item{raw_output}{Raw model output}
 
 \item{threshold}{Incidence threshold below which outputs are fixed}
 
-\item{coverage_input_address}{Address of coverage input data}
+\item{input_address}{Address of input data}
 
 \item{...}{Additional columns to select (for example run names)}
 }

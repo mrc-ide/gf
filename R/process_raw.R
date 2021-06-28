@@ -41,13 +41,17 @@ model_output_to_long <- function(x, ...){
 #'
 #' @param raw_output Raw model output
 #' @param threshold Incidence threshold below which outputs are fixed
-#' @param coverage_input_address Address of coverage input data
+#' @param input_address Address of input data
 #' @param ... Additional columns to select (for example run names)
 #'
 #' @return Pre-processed model output
 #' @export
-process_raw <- function(raw_output, threshold = 0, coverage_input_address, ...){
-  coverage_input <- readRDS(coverage_input_address)
+process_raw <- function(raw_output, threshold = 0, input_address, ...){
+  coverage_input <- readRDS(input_address) %>%
+    dplyr::select(data$Continent, data$ISO, data$NAME_0, data$NAME_1,
+                  data$NAME_2, data$ur, data$pre, data$replenishment,
+                  data$post, data$interventions) %>%
+    tidyr::unnest(col = c(data$interventions))
   
   raw_output %>%
     # Dropping non_smooth output and intervention number output
@@ -76,9 +80,9 @@ process_raw <- function(raw_output, threshold = 0, coverage_input_address, ...){
 replace_missing <- function(x){
   x %>%
     dplyr::mutate(prev = ifelse(.data$prev == -999, 0, .data$prev),
-           inc = ifelse(.data$inc == -999, 0, .data$inc),
-           inc = ifelse(.data$inc == Inf, 0, .data$inc),
-           sev = ifelse(.data$sev == -999, 0, .data$sev),
-           sev = ifelse(.data$sev == Inf, 0, .data$sev),
-           prop = ifelse(.data$prop == -999, 0, .data$prop))
+                  inc = ifelse(.data$inc == -999, 0, .data$inc),
+                  inc = ifelse(.data$inc == Inf, 0, .data$inc),
+                  sev = ifelse(.data$sev == -999, 0, .data$sev),
+                  sev = ifelse(.data$sev == Inf, 0, .data$sev),
+                  prop = ifelse(.data$prop == -999, 0, .data$prop))
 }
