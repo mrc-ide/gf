@@ -4,12 +4,14 @@
 \alias{multi_optimisation}
 \title{Run multiple optimisations}
 \usage{
-multi_optimisation(x, budget_prop)
+multi_optimisation(x, budget_prop, force_gp = FALSE)
 }
 \arguments{
 \item{x}{Optimisation data}
 
 \item{budget_prop}{Vector of proportions: these are the budgets as a proportion of the GP budget}
+
+\item{force_gp}{Option to fix Global PLan strategy at budegt_prop = 1}
 }
 \value{
 Optimisated output

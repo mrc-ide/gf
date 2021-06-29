@@ -116,13 +116,14 @@ single_optimisation <- function(x, budget){
 #'
 #' @param x Optimisation data
 #' @param budget_prop Vector of proportions: these are the budgets as a proportion of the GP budget
+#' @param force_gp Option to fix Global PLan strategy at budegt_prop = 1
 #'
 #' @return Optimisated output
 #' @export
-multi_optimisation <- function(x, budget_prop){
+multi_optimisation <- function(x, budget_prop, force_gp = FALSE){
   budgets <- sum(dplyr::filter(x, .data$replenishment == "gp")$cost) * budget_prop
   
-  # In the first phase (when affordable) all solutions must include (nax) treatment
+  # In the first phase (when affordable) all solutions must include (max) treatment
   first_phase_data <- x %>%
     dplyr::filter(grepl("tx100", .data$replenishment) | grepl("gp", .data$replenishment))
   # Estimate the minimum budget required to obtain a first phase solution
@@ -144,10 +145,10 @@ multi_optimisation <- function(x, budget_prop){
     dplyr::ungroup() %>%
     dplyr::pull(.data$cost) %>%
     sum()
-  # Run the optimisation for all budgets (if budget prop == 1 we "force" the GP solution currently)
+  # Run the optimisation for all budgets
   out <- list()
   for(i in seq_along(budgets)){
-    if(budget_prop[i] == 1){
+    if(budget_prop[i] == 1 & force_gp){
       out[[i]] <- dplyr::filter(x, .data$replenishment == "gp") %>%
         dplyr::mutate(budget = budgets[i],
                       budget_prop = budget_prop[i])
