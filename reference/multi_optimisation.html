@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gf</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.17</span>
       </span>
     </div>
 
@@ -126,7 +126,7 @@
     <p>Run multiple optimisations</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>multi_optimisation</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>budget_prop</span><span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>multi_optimisation</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>budget_prop</span>, force_gp <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,6 +138,10 @@
     <tr>
       <th>budget_prop</th>
       <td><p>Vector of proportions: these are the budgets as a proportion of the GP budget</p></td>
+    </tr>
+    <tr>
+      <th>force_gp</th>
+      <td><p>Option to fix Global PLan strategy at budegt_prop = 1</p></td>
     </tr>
     </table>
 
