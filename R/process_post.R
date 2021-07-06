@@ -24,7 +24,7 @@ prune <- function(x){
 #'
 #' @param x output
 #' @param threshold Incidence threshold below which outputs are fixed
-elim_threshold <- function(x, threshold = 0){
+elim_threshold <- function(x, threshold = -1){
   # Find if earliest year post 2020 that meets threshold criteria
   th <- x %>%
     dplyr::filter(.data$year > 2020) %>%
