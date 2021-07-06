@@ -8,7 +8,8 @@
 #' @export
 create_optimisation_data <- function(processed_output, max_year = 2030, discounting_rate = 0.03){
   processed_output %>%
-    dplyr::filter(.data$year %in% 2024:max_year) %>%
+    dplyr::filter(.data$post == "continue",
+                  .data$year %in% 2024:max_year) %>%
     dplyr::mutate(discounting = ifelse(.data$year %in% 2024:2026, 1, (1 + discounting_rate) ^ (.data$year - 2026))) %>%
     dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur, .data$pre, .data$replenishment) %>%
     dplyr::summarise(cases = sum(.data$cases / .data$discounting),

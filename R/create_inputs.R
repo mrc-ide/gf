@@ -30,7 +30,7 @@ extend <- function(x){
 back_adjust_iccm <- function(x){
   x %>%
     dplyr::mutate(iccm_coverage = .data$iccm * 0.1,
-           treatment_coverage  = pmax(0, .data$treatment_coverage - .data$iccm_coverage))
+                  treatment_coverage  = pmax(0, .data$treatment_coverage - .data$iccm_coverage))
 }
 
 #' Combine iccm coverage with treatment coverage
@@ -39,7 +39,7 @@ back_adjust_iccm <- function(x){
 forward_adjust_iccm <- function(x){
   x %>%
     dplyr::mutate(treatment_coverage = pmin(1, .data$treatment_coverage + .data$iccm_coverage),
-           iccm = ifelse(.data$iccm_coverage > 0, 1, 0))
+                  iccm = ifelse(.data$iccm_coverage > 0, 1, 0))
 }
 
 #' Create set of binary coverage options
@@ -128,6 +128,15 @@ create_names <- function(intervention_binary_options){
   return(out)
 }
 
+#' Continue coverage in post replenishment period
+#'
+#' @param interventions An interventions dataframe
+#' @export
+fixed_post <- function(interventions){
+  interventions[interventions$year > 2026, -1] <- NA
+  tidyr::fill(interventions, -.data$year, .direction = "down")
+}
+
 #' Make replenishment options
 #'
 #' @param gp_input_single A input row (site) from the GP
@@ -142,12 +151,18 @@ replenishment_options <- function(gp_input_single){
   # Create a unique name for each set of modified intervention inputs
   replenishment_names <- c(apply(intervention_option_matrix, 1, create_names), "gp")
   # Create the full set of inputs for each set of modified intervention inputs
-  output <- gp_input_single[rep(1, length(intervention_options)),] %>%
+  output_gp_post <- gp_input_single[rep(1, length(intervention_options)),] %>%
     dplyr::mutate(pre = "gp",
                   post = "gp",
                   replenishment = replenishment_names,
                   interventions = intervention_options,
                   interventions = lapply(.data$interventions, forward_adjust_iccm)) %>%
     dplyr::select(.data$Continent, .data$ISO, .data$NAME_0, .data$NAME_1, .data$NAME_2,.data$ur, .data$pre, .data$replenishment, .data$post, .data$interventions, tidyr::everything())
+  output_continue_post <- output_gp_post %>%
+    dplyr::mutate(post = "continue",
+           interventions = purrr::map(.data$interventions, fixed_post))
+  
+  output <- dplyr::bind_rows(output_gp_post, output_continue_post)
+  
   return(output)
 }
