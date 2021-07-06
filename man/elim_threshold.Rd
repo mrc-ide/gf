@@ -4,7 +4,7 @@
 \alias{elim_threshold}
 \title{Elimination threshold}
 \usage{
-elim_threshold(x, threshold = 0)
+elim_threshold(x, threshold = -1)
 }
 \arguments{
 \item{x}{output}

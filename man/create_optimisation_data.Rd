@@ -4,10 +4,18 @@
 \alias{create_optimisation_data}
 \title{Create dataset for optimisation}
 \usage{
-create_optimisation_data(processed_output)
+create_optimisation_data(
+  processed_output,
+  max_year = 2030,
+  discounting_rate = 0.03
+)
 }
 \arguments{
 \item{processed_output}{Processed model output}
+
+\item{max_year}{Maximum year to quantify impact to}
+
+\item{discounting_rate}{rate Rate outputs discounted after the replenishment period}
 }
 \value{
 Data for use in optimisation
