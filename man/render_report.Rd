@@ -4,10 +4,12 @@
 \alias{render_report}
 \title{Create country summary report}
 \usage{
-render_report(gf_optimised, output_file)
+render_report(gf_optimised, gts, output_file)
 }
 \arguments{
 \item{gf_optimised}{Optimised data for a country}
+
+\item{gts}{Country level annual summary from the GTS for a country}
 
 \item{output_file}{Report output address}
 }

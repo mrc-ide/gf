@@ -19,6 +19,25 @@ country <- unique(gf_optimised$NAME_0)
 \    
 \    
 
+## GTS comparions check
+
+```{r, echo = FALSE, fig.height = 4, fig.width = 6, message = FALSE}
+gf_global_plan <- gf_optimised %>%
+  filter(pre == "gp", replenishment == "gp", post == "gp") %>%
+  group_by(year) %>%
+  summarise(cases = cases) %>%
+  mutate(run = "GF global plan")
+gts_global_plan <- gts %>%
+  select(year, cases) %>%
+  mutate(run = "GTS global plan")
+gts_gf <- bind_row(gf_global_plan, gts_global_plan)
+
+ggplot(gts_gf, aes(x = year, y = cases, col = run)) +
+  geom_line() +
+  theme_bw()
+```
+
+\newpage
 
 ## Interventions
 
@@ -116,7 +135,23 @@ cases_replenishment <- ggplot(cases_budget_prop, aes(x = budget_prop, y = cases 
         legend.text  = element_text(size = 10),
         legend.key.size = unit(0.5, "lines"))
 
-print(cumulative_cases / case_time_series / cases_replenishment)
+cases_increase_budget_prop <- cases_budget_prop
+cases_increase_budget_prop$cases = cases_increase_budget_prop$cases - cases_increase_budget_prop$cases[cases_increase_budget_prop$budget_prop == 1]
+cases_increase_budget_prop$cases_lower = cases_increase_budget_prop$cases_lower - cases_increase_budget_prop$cases_lower[cases_increase_budget_prop$budget_prop == 1]
+cases_increase_budget_prop$cases_upper = cases_increase_budget_prop$cases_upper - cases_increase_budget_prop$cases[cases_upper$budget_prop == 1]
+
+cases_increase_replenishment <- ggplot(cases_increase_budget_prop, aes(x = budget_prop, y = cases / 1e6, fill = budget_prop, ymin = cases_lower / 1e6, ymax = cases_upper / 1e6)) +
+  geom_bar(stat = "identity") +
+  geom_linerange() +
+  scale_fill_discrete(name = "Proportion of \nglobal plan budget") +
+  xlab("Proportion of global plan budget") +
+  ylab("Increase in cases (millions) vs budget_prop = 1") +
+  theme_bw() +
+  theme(legend.title = element_text(size = 10), 
+        legend.text  = element_text(size = 10),
+        legend.key.size = unit(0.5, "lines"))
+
+print(cumulative_cases / case_time_series / cases_replenishment / cases_increase_replenishment)
 
 ```
 
