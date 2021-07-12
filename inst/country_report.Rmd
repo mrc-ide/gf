@@ -23,7 +23,6 @@ country <- unique(gf_optimised$NAME_0)
 
 ```{r, echo = FALSE, fig.height = 4, fig.width = 6, message = FALSE}
 gf_global_plan <- gf_gp %>%
-  filter(pre == "gp", replenishment == "gp", post == "gp") %>%
   select(year, cases) %>%
   mutate(run = "GF global plan")
 gts_global_plan <- gts_gp %>%
