@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gf</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.20</span>
       </span>
     </div>
 
@@ -126,7 +126,7 @@
     <p>Create country summary report</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>render_report</span><span class='op'>(</span><span class='va'>gf_optimised</span>, <span class='va'>gts</span>, <span class='va'>output_file</span><span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>render_report</span><span class='op'>(</span><span class='va'>gf_optimised</span>, <span class='va'>gf_gp</span>, <span class='va'>gts_gp</span>, <span class='va'>output_file</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -136,8 +136,12 @@
       <td><p>Optimised data for a country</p></td>
     </tr>
     <tr>
-      <th>gts</th>
-      <td><p>Country level annual summary from the GTS for a country</p></td>
+      <th>gf_gp</th>
+      <td><p>Country level annual summary from the GF runs of global plan</p></td>
+    </tr>
+    <tr>
+      <th>gts_gp</th>
+      <td><p>Country level annual summary from the GTS global plan</p></td>
     </tr>
     <tr>
       <th>output_file</th>
