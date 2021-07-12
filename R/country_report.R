@@ -12,7 +12,8 @@ render_report <- function(gf_optimised, gf_gp, gts_gp, output_file) {
     rmd_file, 
     params = list(
       gf_optimised = gf_optimised,
-      gts = gts
+      gf_gp = gf_gp,
+      gts_gp = gts_gp
     ),
     output_file = output_file
   )
