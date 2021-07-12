@@ -22,12 +22,11 @@ country <- unique(gf_optimised$NAME_0)
 ## GTS comparions check
 
 ```{r, echo = FALSE, fig.height = 4, fig.width = 6, message = FALSE}
-gf_global_plan <- gf_optimised %>%
+gf_global_plan <- gf_gp %>%
   filter(pre == "gp", replenishment == "gp", post == "gp") %>%
-  group_by(year) %>%
-  summarise(cases = cases) %>%
+  select(year, cases) %>%
   mutate(run = "GF global plan")
-gts_global_plan <- gts %>%
+gts_global_plan <- gts_gp %>%
   select(year, cases) %>%
   mutate(run = "GTS global plan")
 gts_gf <- bind_row(gf_global_plan, gts_global_plan)
