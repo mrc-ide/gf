@@ -11,6 +11,7 @@ library(tidyr)
 library(gf)
 iso <- unique(gf_optimised$ISO)
 country <- unique(gf_optimised$NAME_0)
+gf_optimised$budget_prop = factor(gf_optimised$budget_prop)
 ```
 
 # Global Fund country report for `r country` (`r iso`)
@@ -26,6 +27,7 @@ gf_global_plan <- gf_gp %>%
   select(year, cases) %>%
   mutate(run = "GF global plan")
 gts_global_plan <- gts_gp %>%
+  filter(Scenario == "Accelerate2as") %>%
   select(year, cases) %>%
   mutate(run = "GTS global plan")
 gts_gf <- bind_rows(gf_global_plan, gts_global_plan)
@@ -136,7 +138,7 @@ cases_replenishment <- ggplot(cases_budget_prop, aes(x = budget_prop, y = cases 
 cases_increase_budget_prop <- cases_budget_prop
 cases_increase_budget_prop$cases = cases_increase_budget_prop$cases - cases_increase_budget_prop$cases[cases_increase_budget_prop$budget_prop == 1]
 cases_increase_budget_prop$cases_lower = cases_increase_budget_prop$cases_lower - cases_increase_budget_prop$cases_lower[cases_increase_budget_prop$budget_prop == 1]
-cases_increase_budget_prop$cases_upper = cases_increase_budget_prop$cases_upper - cases_increase_budget_prop$cases[cases_upper$budget_prop == 1]
+cases_increase_budget_prop$cases_upper = cases_increase_budget_prop$cases_upper - cases_increase_budget_prop$cases[cases_increase_budget_prop$budget_prop == 1]
 
 cases_increase_replenishment <- ggplot(cases_increase_budget_prop, aes(x = budget_prop, y = cases / 1e6, fill = budget_prop, ymin = cases_lower / 1e6, ymax = cases_upper / 1e6)) +
   geom_bar(stat = "identity") +
