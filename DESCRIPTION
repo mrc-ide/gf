@@ -1,6 +1,6 @@
 Package: gf
 Title: Global fund malaria modelling
-Version: 0.0.21
+Version: 0.0.22
 Authors@R: c(
   person("Peter", "Winskill", email = "p.winskill@imperial.ac.uk", role = c("aut", "cre"))
   )

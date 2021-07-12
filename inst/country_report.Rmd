@@ -28,7 +28,7 @@ gf_global_plan <- gf_gp %>%
 gts_global_plan <- gts_gp %>%
   select(year, cases) %>%
   mutate(run = "GTS global plan")
-gts_gf <- bind_row(gf_global_plan, gts_global_plan)
+gts_gf <- bind_rows(gf_global_plan, gts_global_plan)
 
 ggplot(gts_gf, aes(x = year, y = cases, col = run)) +
   geom_line() +
