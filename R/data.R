@@ -38,3 +38,7 @@
 #' WHO burden estimates (callibrated to)
 #' 
 "who_burden"
+
+#' Average HH size
+#' 
+"hh"
