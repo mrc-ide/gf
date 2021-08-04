@@ -12,7 +12,9 @@ create_optimisation_data <- function(processed_output, max_year = 2030){
     dplyr::summarise(cases = sum(.data$cases),
                      deaths = sum(.data$deaths)) %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(y = (.data$cases * (sum(.data$deaths) / sum(.data$cases))) + .data$deaths)
+    # Where 409000 = WMR deaths, 229000000 = WMR cases
+    dplyr::mutate(y = .data$deaths + .data$cases * (409000 / 229000000))
+    #dplyr::mutate(y = (.data$cases * (sum(.data$deaths) / sum(.data$cases))) + .data$deaths)
   
   cost_out <- processed_output %>%
     dplyr::filter(.data$year %in% 2024:2026) %>%
