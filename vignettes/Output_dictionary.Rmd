@@ -60,6 +60,12 @@ dalys
   of death of the implied years of lost life in the future following a death. 
   The 95% uncertainty intervals are denoted by _lower and _upper suffixes.
   
+yll
+  : Years of life lost component of DALYs.
+  
+yld
+  : Years lost to disability omponent of DALYs.
+  
 treatment_coverage
   : The proportion of clinical cases that receive treatment. This includes all
   possible healthcare provision (public, private etc.).
