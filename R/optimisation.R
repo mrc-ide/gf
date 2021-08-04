@@ -6,15 +6,22 @@
 #' @return Data for use in optimisation
 #' @export
 create_optimisation_data <- function(processed_output, max_year = 2030){
-  processed_output %>%
-    dplyr::filter(.data$post == "continue",
-                  .data$year %in% 2024:max_year) %>%
-    dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur, .data$pre, .data$replenishment) %>%
+  epi_out <- processed_output %>%
+    dplyr::filter(.data$year %in% 2024:max_year) %>%
+    dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur, .data$pre, .data$replenishment, .data$post) %>%
     dplyr::summarise(cases = sum(.data$cases),
-                     deaths = sum(.data$deaths),
-                     cost = sum(.data$total_cost)) %>%
+                     deaths = sum(.data$deaths)) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(y = (.data$cases * (sum(.data$deaths) / sum(.data$cases))) + .data$deaths)
+  
+  cost_out <- processed_output %>%
+    dplyr::filter(.data$year %in% 2024:2026) %>%
+    dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur, .data$pre, .data$replenishment, .data$post) %>%
+    dplyr::summarise(cost = sum(.data$total_cost)) %>%
+    dplyr::ungroup()
+  
+  out <- left_join(epi_out, cost_out, by = c("NAME_0", "NAME_1", "NAME_2", "ur", "pre", "replenishment", "post"))
+  return(out)
 }
 
 #' Filter non-dominant solutions
