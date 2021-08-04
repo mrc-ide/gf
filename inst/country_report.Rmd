@@ -1,5 +1,6 @@
 ---
 output: pdf_document
+classoption: landscape
 ---
 
 ```{r setup, include=FALSE}
@@ -12,13 +13,15 @@ library(gf)
 iso <- unique(gf_optimised$ISO)
 country <- unique(gf_optimised$NAME_0)
 gf_optimised$budget_prop = factor(gf_optimised$budget_prop)
+gf_optimised$pre = factor(gf_optimised$pre, levels = c("continueddisruption", "pastperformance", "targets", "gp"))
 ```
 
 # Global Fund country report for `r country` (`r iso`)
+
 ### Date: `r format(Sys.time(), "%d/%m/%y")`
 
-\    
-\    
+ \
+ 
 
 ## GTS comparions check
 
@@ -41,7 +44,7 @@ ggplot(gts_gf, aes(x = year, y = cases, col = run)) +
 
 ## Interventions
 
-```{r, echo = FALSE, fig.height = 4, fig.width = 6, message = FALSE}
+```{r, echo = FALSE, fig.height = 4, fig.width = 11, message = FALSE}
 interventions_budget_prop <- gf_optimised %>%
   select(year, pre, budget_prop, post, par,
          treatment_coverage, net_coverage, irs_coverage, smc_coverage, ipti_coverage, rtss_coverage) %>%
@@ -74,7 +77,9 @@ interventions_replenishment <- ggplot(interventions_budget_prop, aes(x = budget_
   theme_bw() +
   theme(legend.title = element_text(size = 10), 
         legend.text  = element_text(size = 10),
-        legend.key.size = unit(0.5, "lines"))
+        legend.key.size = unit(0.5, "lines"),
+        axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  facet_grid(post ~ pre)
 
 print(interventions_replenishment)
 
@@ -83,7 +88,8 @@ print(interventions_replenishment)
 \newpage
 
 ## Cases
-```{r, echo = FALSE, fig.height = 7, fig.width = 5, message = FALSE}
+
+```{r, echo = FALSE, fig.height = 6, fig.width = 11, message = FALSE}
 cumulative_case_data <- gf_optimised %>%
   filter(year >= 2019) %>%
   group_by(pre, budget_prop, post) %>%
@@ -92,13 +98,21 @@ cumulative_case_data <- gf_optimised %>%
 
 cumulative_cases <- ggplot(cumulative_case_data, aes(x = year, y = cumulative_cases / 1e6, col = budget_prop)) + 
   geom_line() +
-  scale_colour_discrete(name = "Proportion of \nglobal plan budget") +
+  scale_colour_discrete(name = "Proportion of global plan budget") +
   xlab("Year") +
-  ylab("Cumulative cases \n(millions, since 2019)") +
+  ylab("Cumulative cases (millions, since 2019)") +
   theme_bw() +
   theme(legend.title = element_text(size = 10), 
         legend.text  = element_text(size = 10),
-        legend.key.size = unit(0.5, "lines"))
+        legend.key.size = unit(0.5, "lines"),
+        axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  facet_grid(post ~ pre)
+cumulative_cases
+```
+
+\newpage
+
+```{r, echo = FALSE, fig.height = 6, fig.width = 11, message = FALSE}
 
 case_data <- gf_optimised %>%
   filter(year >= 2016)
@@ -109,16 +123,23 @@ who <- who_burden %>%
 case_time_series <- ggplot() + 
   geom_line(data = case_data, aes(x = year, y = cases / 1e6, col = budget_prop)) +
   geom_point(data = who, aes(x = year, y = cases / 1e6), col = "red") +
-  scale_colour_discrete(name = "Proportion of \nglobal plan budget") +
+  scale_colour_discrete(name = "Proportion of global plan budget") +
   xlab("Year") +
   ylab("Cases (millions)") +
   theme_bw() +
   theme(legend.title = element_text(size = 10), 
         legend.text  = element_text(size = 10),
-        legend.key.size = unit(0.5, "lines"))
+        legend.key.size = unit(0.5, "lines"),
+        axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  facet_grid(post ~ pre)
+case_time_series
+```
 
+\newpage
+
+```{r, echo = FALSE, fig.height = 6, fig.width = 11, message = FALSE}
 cases_budget_prop <- gf_optimised %>%
-  filter(year %in% 2024:2026) %>%
+  filter(year %in% 2024:2030) %>%
   group_by(pre, budget_prop, post) %>%
   summarise(cases = sum(cases),
             cases_lower = sum(cases_lower),
@@ -127,38 +148,51 @@ cases_budget_prop <- gf_optimised %>%
 cases_replenishment <- ggplot(cases_budget_prop, aes(x = budget_prop, y = cases / 1e6, fill = budget_prop, ymin = cases_lower / 1e6, ymax = cases_upper / 1e6)) +
   geom_bar(stat = "identity") +
   geom_linerange() +
-  scale_fill_discrete(name = "Proportion of \nglobal plan budget") +
+  scale_fill_discrete(name = "Proportion of global plan budget") +
   xlab("Proportion of global plan budget") +
-  ylab("Total cases (millions) during \nreplenishment period") +
+  ylab("Total cases (millions) during replenishment period") +
   theme_bw() +
   theme(legend.title = element_text(size = 10), 
         legend.text  = element_text(size = 10),
-        legend.key.size = unit(0.5, "lines"))
+        legend.key.size = unit(0.5, "lines"),
+        axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  facet_grid(post ~ pre)
+cases_replenishment
 
-cases_increase_budget_prop <- cases_budget_prop
-cases_increase_budget_prop$cases = cases_increase_budget_prop$cases - cases_increase_budget_prop$cases[cases_increase_budget_prop$budget_prop == 1]
-cases_increase_budget_prop$cases_lower = cases_increase_budget_prop$cases_lower - cases_increase_budget_prop$cases_lower[cases_increase_budget_prop$budget_prop == 1]
-cases_increase_budget_prop$cases_upper = cases_increase_budget_prop$cases_upper - cases_increase_budget_prop$cases[cases_increase_budget_prop$budget_prop == 1]
+```
+
+\newpage
+
+```{r, echo = FALSE, fig.height = 6, fig.width = 11, message = FALSE}
+
+cases_increase_budget_prop <- cases_budget_prop %>%
+  group_by(pre, post) %>%
+  mutate(cases = cases - cases[budget_prop == 1],
+         cases_lower = cases_lower - cases_lower[budget_prop == 1],
+         cases_upper = cases_upper - cases_upper[budget_prop == 1])
 
 cases_increase_replenishment <- ggplot(cases_increase_budget_prop, aes(x = budget_prop, y = cases / 1e6, fill = budget_prop, ymin = cases_lower / 1e6, ymax = cases_upper / 1e6)) +
   geom_bar(stat = "identity") +
   geom_linerange() +
-  scale_fill_discrete(name = "Proportion of \nglobal plan budget") +
+  scale_fill_discrete(name = "Proportion of global plan budget") +
   xlab("Proportion of global plan budget") +
   ylab("Increase in cases (millions) vs budget_prop = 1") +
   theme_bw() +
   theme(legend.title = element_text(size = 10), 
         legend.text  = element_text(size = 10),
-        legend.key.size = unit(0.5, "lines"))
-
-print(cumulative_cases / case_time_series / cases_replenishment / cases_increase_replenishment)
+        legend.key.size = unit(0.5, "lines"),
+        axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  facet_grid(post ~ pre)
+cases_increase_replenishment
+#print(cases_increase_replenishment)
 
 ```
 
 \newpage
 
 ## Deaths
-```{r, echo = FALSE, fig.height = 7, fig.width = 5, message = FALSE}
+
+```{r, echo = FALSE, fig.height = 6, fig.width = 11, message = FALSE}
 cumulative_death_data <- gf_optimised %>%
   filter(year >= 2019) %>%
   group_by(pre, budget_prop, post) %>%
@@ -167,27 +201,40 @@ cumulative_death_data <- gf_optimised %>%
 
 cumulative_deaths <- ggplot(cumulative_death_data, aes(x = year, y = cumulative_deaths / 1000, col = budget_prop)) + 
   geom_line() +
-  scale_colour_discrete(name = "Proportion of \nglobal plan budget") +
+  scale_colour_discrete(name = "Proportion of global plan budget") +
   xlab("Year") +
-  ylab("Cumulative deaths \n(thousands, since 2019)") +
+  ylab("Cumulative deaths (thousands, since 2019)") +
   theme_bw() +
   theme(legend.title = element_text(size = 10), 
         legend.text  = element_text(size = 10),
-        legend.key.size = unit(0.5, "lines"))
+        legend.key.size = unit(0.5, "lines"),
+        axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  facet_grid(post ~ pre)
+cumulative_deaths
+```
 
+\newpage
+
+```{r, echo = FALSE, fig.height = 6, fig.width = 11, message = FALSE}
 death_data <- gf_optimised %>%
   filter(year >= 2016)
 
 death_time_series <- ggplot() + 
   geom_line(data = death_data, aes(x = year, y = deaths / 1000, col = budget_prop)) +
-  scale_colour_discrete(name = "Proportion of \nglobal plan budget") +
+  scale_colour_discrete(name = "Proportion of global plan budget") +
   xlab("Year") +
   ylab("deaths (thousands)") +
   theme_bw() +
   theme(legend.title = element_text(size = 10), 
         legend.text  = element_text(size = 10),
-        legend.key.size = unit(0.5, "lines"))
+        legend.key.size = unit(0.5, "lines"),
+        axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  facet_grid(post ~ pre)
+death_time_series
+```
+\newpage
 
+```{r, echo = FALSE, fig.height = 6, fig.width = 11, message = FALSE}
 deaths_budget_prop <- gf_optimised %>%
   filter(year %in% 2024:2026) %>%
   group_by(pre, budget_prop, post) %>%
@@ -198,22 +245,24 @@ deaths_budget_prop <- gf_optimised %>%
 deaths_replenishment <- ggplot(deaths_budget_prop, aes(x = budget_prop, y = deaths / 1000, fill = budget_prop, ymin = deaths_lower / 1000, ymax = deaths_upper / 1000)) +
   geom_bar(stat = "identity") +
   geom_linerange() +
-  scale_fill_discrete(name = "Proportion of \nglobal plan budget") +
+  scale_fill_discrete(name = "Proportion of global plan budget") +
   xlab("Proportion of global plan budget") +
-  ylab("Total deaths (thousands) during \nreplenishment period") +
+  ylab("Total deaths (thousands) during replenishment period") +
   theme_bw() +
   theme(legend.title = element_text(size = 10), 
         legend.text  = element_text(size = 10),
-        legend.key.size = unit(0.5, "lines"))
-
-print(cumulative_deaths / death_time_series / deaths_replenishment)
-
+        legend.key.size = unit(0.5, "lines"),
+        axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  facet_grid(post ~ pre)
+deaths_replenishment
 ```
+
 
 \newpage
 
 ## DALYS
-```{r, echo = FALSE, fig.height = 7, fig.width = 5, message = FALSE}
+
+```{r, echo = FALSE, fig.height = 6, fig.width = 11, message = FALSE}
 cumulative_daly_data <- gf_optimised %>%
   filter(year >= 2019) %>%
   group_by(pre, budget_prop, post) %>%
@@ -222,27 +271,41 @@ cumulative_daly_data <- gf_optimised %>%
 
 cumulative_dalys <- ggplot(cumulative_daly_data, aes(x = year, y = cumulative_dalys, col = budget_prop)) + 
   geom_line() +
-  scale_colour_discrete(name = "Proportion of \nglobal plan budget") +
+  scale_colour_discrete(name = "Proportion of global plan budget") +
   xlab("Year") +
-  ylab("Cumulative dalys \n(millions, since 2019)") +
+  ylab("Cumulative dalys (millions, since 2019)") +
   theme_bw() +
   theme(legend.title = element_text(size = 10), 
         legend.text  = element_text(size = 10),
-        legend.key.size = unit(0.5, "lines"))
+        legend.key.size = unit(0.5, "lines"),
+        axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  facet_grid(post ~ pre)
+cumulative_dalys
+```
 
+\newpage
+
+
+```{r, echo = FALSE, fig.height = 6, fig.width = 11, message = FALSE}
 daly_data <- gf_optimised %>%
   filter(year >= 2016)
 
 daly_time_series <- ggplot() + 
   geom_line(data = daly_data, aes(x = year, y = dalys / 1e6, col = budget_prop)) +
-  scale_colour_discrete(name = "Proportion of \nglobal plan budget") +
+  scale_colour_discrete(name = "Proportion of global plan budget") +
   xlab("Year") +
   ylab("dalys (millions)") +
   theme_bw() +
   theme(legend.title = element_text(size = 10), 
         legend.text  = element_text(size = 10),
-        legend.key.size = unit(0.5, "lines"))
+        legend.key.size = unit(0.5, "lines"),
+        axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  facet_grid(post ~ pre)
+daly_time_series
+```
+\newpage
 
+```{r, echo = FALSE, fig.height = 6, fig.width = 11, message = FALSE}
 dalys_budget_prop <- gf_optimised %>%
   filter(year %in% 2024:2026) %>%
   group_by(pre, budget_prop, post) %>%
@@ -253,14 +316,15 @@ dalys_budget_prop <- gf_optimised %>%
 dalys_replenishment <- ggplot(dalys_budget_prop, aes(x = budget_prop, y = dalys / 1e6, fill = budget_prop, ymin = dalys_lower / 1e6, ymax = dalys_upper / 1e6)) +
   geom_bar(stat = "identity") +
   geom_linerange() +
-  scale_fill_discrete(name = "Proportion of \nglobal plan budget") +
+  scale_fill_discrete(name = "Proportion of global plan budget") +
   xlab("Proportion of global plan budget") +
-  ylab("Total dalys (millions) during \nreplenishment period") +
+  ylab("Total dalys (millions) during replenishment period") +
   theme_bw() +
   theme(legend.title = element_text(size = 10), 
         legend.text  = element_text(size = 10),
-        legend.key.size = unit(0.5, "lines"))
-
-print(cumulative_dalys / daly_time_series / dalys_replenishment)
+        legend.key.size = unit(0.5, "lines"),
+        axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  facet_grid(post ~ pre)
+dalys_replenishment
 
 ```
