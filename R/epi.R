@@ -155,7 +155,7 @@ dalys_cast_forward <- function(x, lifespan, ...){
     dplyr::mutate(dalys = .data$yld + .data$yll_cast_forwards,
                   dalys_lower= .data$yld_lower + .data$yll_cast_forwards_lower,
                   dalys_upper = .data$yld_upper + .data$yll_cast_forwards_upper) %>%
-    dplyr::select(-.data$csd, -.data$csd_lower, -.data$csd_upper) %>%
+    dplyr::select(-.data$csd, -.data$csd_lower, -.data$csd_upper, -.data$yll, -.data$yll_lower, -.data$yll_upper) %>%
     dplyr::rename(yll = .data$yll_cast_forwards,
                   yll_lower = .data$yll_cast_forwards_lower,
                   yll_upper = .data$yll_cast_forwards_upper)
