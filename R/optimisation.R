@@ -126,13 +126,14 @@ single_optimisation <- function(x, budget){
 #' Run multiple optimisations
 #'
 #' @param x Optimisation data
+#' @param gp_replenishment_budget Budget in global plan for period 2024:2026 (inclusive)
 #' @param budget_prop Vector of proportions: these are the budgets as a proportion of the GP budget
 #' @param force_gp Option to fix Global PLan strategy at budegt_prop = 1
 #'
 #' @return Optimisated output
 #' @export
-multi_optimisation <- function(x, budget_prop, force_gp = FALSE){
-  budgets <- sum(dplyr::filter(x, .data$replenishment == "gp")$cost) * budget_prop
+multi_optimisation <- function(x, gp_replenishment_budget, budget_prop, force_gp = FALSE){
+  budgets <- gp_replenishment_budget * budget_prop
   
   # In the first phase (when affordable) all solutions must include (max) treatment
   first_phase_data <- x %>%

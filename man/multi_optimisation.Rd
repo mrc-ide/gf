@@ -4,10 +4,12 @@
 \alias{multi_optimisation}
 \title{Run multiple optimisations}
 \usage{
-multi_optimisation(x, budget_prop, force_gp = FALSE)
+multi_optimisation(x, gp_replenishment_budget, budget_prop, force_gp = FALSE)
 }
 \arguments{
 \item{x}{Optimisation data}
+
+\item{gp_replenishment_budget}{Budget in global plan for period 2024:2026 (inclusive)}
 
 \item{budget_prop}{Vector of proportions: these are the budgets as a proportion of the GP budget}
 
