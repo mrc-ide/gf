@@ -42,3 +42,10 @@
 #' Average HH size
 #' 
 "hh"
+
+#' Case weighting.
+#' 
+#' Ratio of deaths:cases from GP to use to downscale cases to weight them 
+#' equally to deaths in optimisation.
+#' 
+"case_weighting"

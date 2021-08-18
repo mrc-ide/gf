@@ -6,16 +6,18 @@
 #' @return Data for use in optimisation
 #' @export
 create_optimisation_data <- function(processed_output, max_year = 2030){
+  weighting <- case_weighting %>%
+    dplyr::filter(.data$ISO == processed_output$ISO[1]) %>%
+    dplyr::pull(.data$multiplier)
+  
   epi_out <- processed_output %>%
     dplyr::filter(.data$year %in% 2024:max_year) %>%
     dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur, .data$pre, .data$replenishment, .data$post) %>%
     dplyr::summarise(cases = sum(.data$cases),
                      deaths = sum(.data$deaths)) %>%
     dplyr::ungroup() %>%
-    # Where 409000 = WMR deaths, 229000000 = WMR cases
-    dplyr::mutate(y = .data$deaths + .data$cases * (409000 / 229000000))
-    #dplyr::mutate(y = (.data$cases * (sum(.data$deaths) / sum(.data$cases))) + .data$deaths)
-  
+    dplyr::mutate(y = .data$deaths + .data$cases * weighting)
+
   cost_out <- processed_output %>%
     dplyr::filter(.data$year %in% 2024:2026) %>%
     dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur, .data$pre, .data$replenishment, .data$post) %>%
