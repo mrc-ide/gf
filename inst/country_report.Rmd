@@ -42,6 +42,21 @@ ggplot(gts_gf, aes(x = year, y = cases, col = run)) +
 
 \newpage
 
+## Budget check
+
+```{r, echo = FALSE, message = FALSE}
+bc <- gf_optimised %>%
+  filter(budget_prop == 1,
+         year %in% 2024:2026) %>%
+  group_by(pre, post) %>%
+  summarise(cost = sum(total_cost)) %>%
+  mutate(as_prop = cost / global_plan_budget)
+
+print(bc)
+```
+
+\newpage
+
 ## Interventions
 
 ```{r, echo = FALSE, fig.height = 4, fig.width = 11, message = FALSE}

@@ -4,7 +4,7 @@
 \alias{render_report}
 \title{Create country summary report}
 \usage{
-render_report(gf_optimised, gf_gp, gts_gp, output_file)
+render_report(gf_optimised, gf_gp, gts_gp, global_plan_budget, output_file)
 }
 \arguments{
 \item{gf_optimised}{Optimised data for a country}
@@ -12,6 +12,8 @@ render_report(gf_optimised, gf_gp, gts_gp, output_file)
 \item{gf_gp}{Country level annual summary from the GF runs of global plan}
 
 \item{gts_gp}{Country level annual summary from the GTS global plan}
+
+\item{global_plan_budget}{Replenishment period budget from the global plan}
 
 \item{output_file}{Report output address}
 }
