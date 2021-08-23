@@ -82,7 +82,7 @@ interventions_budget_prop <- gf_optimised %>%
                                           "RTS,S"))) %>%
   group_by(pre, budget_prop, post, intervention) %>%
   summarise(coverage = weighted.mean(coverage, par)) %>%
-  mutate(budget_prop = factor(budget_prop, levels = c("0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1")))
+  mutate(budget_prop = factor(budget_prop, levels = budget_levels))
 
 interventions_replenishment <- ggplot(interventions_budget_prop, aes(x = budget_prop, y = coverage, fill = intervention)) +
   geom_bar(stat = "identity", position = "dodge") +

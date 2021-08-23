@@ -4,7 +4,14 @@
 \alias{render_report}
 \title{Create country summary report}
 \usage{
-render_report(gf_optimised, gf_gp, gts_gp, global_plan_budget, output_file)
+render_report(
+  gf_optimised,
+  gf_gp,
+  gts_gp,
+  global_plan_budget,
+  output_file,
+  budget_levels = paste(seq(0.05, 1, 0.05))
+)
 }
 \arguments{
 \item{gf_optimised}{Optimised data for a country}
@@ -16,6 +23,8 @@ render_report(gf_optimised, gf_gp, gts_gp, global_plan_budget, output_file)
 \item{global_plan_budget}{Replenishment period budget from the global plan}
 
 \item{output_file}{Report output address}
+
+\item{budget_levels}{Budget increments used}
 }
 \description{
 Create country summary report
