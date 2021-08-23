@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Perform optimisation for a single budget line — single_optimisation • gf</title>
+<title>Case weighting. — case_weighting • gf</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Perform optimisation for a single budget line — single_optimisation" />
-<meta property="og:description" content="Perform optimisation for a single budget line" />
+<meta property="og:title" content="Case weighting. — case_weighting" />
+<meta property="og:description" content="Ratio of deaths:cases from GP to use to downscale cases to weight them
+equally to deaths in optimisation." />
 
 
 
@@ -115,33 +116,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Perform optimisation for a single budget line</h1>
+    <h1>Case weighting.</h1>
     
-    <div class="hidden name"><code>single_optimisation.Rd</code></div>
+    <div class="hidden name"><code>case_weighting.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Perform optimisation for a single budget line</p>
+    <p>Ratio of deaths:cases from GP to use to downscale cases to weight them
+equally to deaths in optimisation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>single_optimisation</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>budget</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>case_weighting</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>Optimisation data</p></td>
-    </tr>
-    <tr>
-      <th>budget</th>
-      <td><p>Budget</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>Optimisaed output</p>
+    <p>An object of class <code>data.frame</code> with 64 rows and 2 columns.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
