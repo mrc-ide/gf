@@ -343,3 +343,11 @@ dalys_replenishment <- ggplot(dalys_budget_prop, aes(x = budget_prop, y = dalys 
 dalys_replenishment
 
 ```
+
+\newpage
+
+```{r, echo = FALSE, fig.height = 6, fig.width = 11, message = FALSE}
+ggplot(gf_fixed, aes(x = year, y = cases, col = pre, linetype = post)) + 
+  geom_line() +
+  theme_bw()
+```
