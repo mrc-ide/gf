@@ -24,7 +24,7 @@ create_optimisation_data <- function(processed_output, max_year = 2030){
     dplyr::summarise(cost = sum(.data$total_cost)) %>%
     dplyr::ungroup()
   
-  out <- left_join(epi_out, cost_out, by = c("NAME_0", "NAME_1", "NAME_2", "ur", "pre", "replenishment", "post"))
+  out <- dplyr::left_join(epi_out, cost_out, by = c("NAME_0", "NAME_1", "NAME_2", "ur", "pre", "replenishment", "post"))
   return(out)
 }
 
