@@ -30,7 +30,8 @@ pre
 
 replenishment
   : Budget scenario for the replenishment period (2024, 2025, 2026). This may be
-  either 1 (the Global Plan) or some proportion of the Global Plan budget.
+  either optimised output for a given proportion of the Global Plan budget or the
+  name of one of the fixed scenarios.
   
 post
   : Scenario for the period post 2026.
