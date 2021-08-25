@@ -47,6 +47,7 @@ budget optimisation outputs, select the relevant pre and post scenarios and the
 required budget proportion (e.g. `pre = Follow_GP`, `replenishement = 0.75` and
 `post = Revert_to_GP`). For fixed scenarions, select the relevant pre,
 replenishment and post scenarios (e.g. `pre = Follow_GP`, `replenishment = GP`
-and `post = Revert_to_GP`).
+and `post = Revert_to_GP`). Please see the 
+[companion  output dictionary vignette](Output_dictionary.html) for more help.
 
 
