@@ -99,7 +99,12 @@
 <div id="how-do-i-filter-outputs-to-select-a-specific-scenario" class="section level2">
 <h2 class="hasAnchor">
 <a href="#how-do-i-filter-outputs-to-select-a-specific-scenario" class="anchor"></a>3. How do I filter outputs to select a specific scenario?</h2>
-<p>Filtering a specific scenario can be performed by selecting the relevant scenario options from the pre, replenishment and post scenario columns. For budget optimisation outputs, select the relevant pre and post scenarios and the required budget proportion (e.g. <code>pre = Follow_GP</code>, <code>replenishement = 0.75</code> and <code>post = Revert_to_GP</code>). For fixed scenarions, select the relevant pre, replenishment and post scenarios (e.g. <code>pre = Follow_GP</code>, <code>replenishment = GP</code> and <code>post = Revert_to_GP</code>).</p>
+<p>Filtering a specific scenario can be performed by selecting the relevant scenario options from the pre, replenishment and post scenario columns. For budget optimisation outputs, select the relevant pre and post scenarios and the required budget proportion (e.g. <code>pre = Follow_GP</code>, <code>replenishement = 0.75</code> and <code>post = Revert_to_GP</code>). For fixed scenarions, select the relevant pre, replenishment and post scenarios (e.g. <code>pre = Follow_GP</code>, <code>replenishment = GP</code> and <code>post = Revert_to_GP</code>). Please see the <a href="Output_dictionary.html">companion output dictionary vignette</a> for more help.</p>
+</div>
+<div id="can-i-interpolate-intervention-coverage-between-optimised-budget-levels" class="section level2">
+<h2 class="hasAnchor">
+<a href="#can-i-interpolate-intervention-coverage-between-optimised-budget-levels" class="anchor"></a>Can I interpolate intervention coverage between optimised budget levels?</h2>
+<p>In most cases yes, however intervention trends over multiple budget steps may not be linear or monotonic. As a result it is suggested to always interpolate between single budget steps (e.g. 0.6 to 0.65), not across multiple (e.g. 0.6 to 0.8). Optimised output is provided with steps of 0.05 to facilitate this.</p>
 </div>
   </div>
 
