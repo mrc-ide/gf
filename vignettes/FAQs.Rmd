@@ -50,4 +50,10 @@ replenishment and post scenarios (e.g. `pre = Follow_GP`, `replenishment = GP`
 and `post = Revert_to_GP`). Please see the 
 [companion  output dictionary vignette](Output_dictionary.html) for more help.
 
+## Can I interpolate intervention coverage between optimised budget levels?
 
+In most cases yes, however intervention trends over multiple budget steps may
+not be linear or monotonic. As a result it is suggested to always interpolate
+between single budget steps (e.g. 0.6 to 0.65), not across multiple 
+(e.g. 0.6 to 0.8). Optimised output is provided with steps of 0.05 to 
+facilitate this.
