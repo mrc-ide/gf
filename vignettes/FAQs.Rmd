@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## 1. Why does an optimised scenario with a budget equal to (or less), than the Global Plan have greater impact?
+### 1. Why does an optimised scenario with a budget equal to (or less), than the Global Plan have greater impact?
 
 The Global Plan specified broad intervention scale-up projections that were, in
 most instances (not all) at the country level. As such, there is space for an
@@ -22,7 +22,7 @@ increase in efficiency, resulting in a greater impact for the same or less
 spending, with optimal sub-national targeting of interventions. This is what the
 optimised solutions are in the Global Fund runs.
 
-## 2. Why does a decrease in the budget of optimised solutions occasionally result in increased impact?
+### 2. Why does a decrease in the budget of optimised solutions occasionally result in increased impact?
 
 There are a number of reasons why this could occur, Firstly the optimisation is
 set up to minimise and equally weighted sum of cases and deaths. Therefore an
@@ -39,18 +39,18 @@ incidence settings, due to model stochastic, it is possible for a run with
 lower tx coverage to have lower case numbers than a run with higher treatment 
 coverage.
 
-## 3. How do I filter outputs to select a specific scenario?
+### 3. How do I filter outputs to select a specific scenario?
 
 Filtering a specific scenario can be performed by selecting the relevant 
 scenario options from the pre, replenishment and post scenario columns. For 
 budget optimisation outputs, select the relevant pre and post scenarios and the
 required budget proportion (e.g. `pre = Follow_GP`, `replenishement = 0.75` and
 `post = Revert_to_GP`). For fixed scenarions, select the relevant pre,
-replenishment and post scenarios (e.g. `pre = Follow_GP`, `replenishment = GP`
+replenishment and post scenarios (e.g. `pre = Follow_GP`, `replenishment = Revert_to_GP`
 and `post = Revert_to_GP`). Please see the 
 [companion  output dictionary vignette](Output_dictionary.html) for more help.
 
-## Can I interpolate intervention coverage between optimised budget levels?
+### 4. Can I interpolate intervention coverage between optimised budget levels?
 
 In most cases yes, however intervention trends over multiple budget steps may
 not be linear or monotonic. As a result it is suggested to always interpolate
