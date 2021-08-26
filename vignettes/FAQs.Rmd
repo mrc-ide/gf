@@ -48,7 +48,7 @@ required budget proportion (e.g. `pre = Follow_GP`, `replenishement = 0.75` and
 `post = Revert_to_GP`). For fixed scenarions, select the relevant pre,
 replenishment and post scenarios (e.g. `pre = Follow_GP`, `replenishment = Revert_to_GP`
 and `post = Revert_to_GP`). Please see the 
-[companion  output dictionary vignette](Output_dictionary.html) for more help.
+[companion output dictionary vignette](Output_dictionary.html) for more help.
 
 ### 4. Can I interpolate intervention coverage between optimised budget levels?
 
@@ -57,3 +57,9 @@ not be linear or monotonic. As a result it is suggested to always interpolate
 between single budget steps (e.g. 0.6 to 0.65), not across multiple 
 (e.g. 0.6 to 0.8). Optimised output is provided with steps of 0.05 to 
 facilitate this.
+
+### 5. Why do some countries not have the full compliment of budget levels?
+
+In a number of cases the solutions of lower budget levels are not possible as
+the minimum cost solution for the country exceeds these lower budget bounds. As
+no solution can be found in these instances, the output is omitted. 
