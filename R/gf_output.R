@@ -40,6 +40,7 @@ gf_aggregate <- function(x, ...){
       deaths = sum(.data$deaths),
       deaths_lower = sum(.data$deaths_lower),
       deaths_upper = sum(.data$deaths_upper),
+      y = sum(.data$y),
       prev = stats::weighted.mean(.data$prev, .data$par),
       life_years = sum(.data$life_years),
       life_years_lower = sum(.data$life_years_lower),
