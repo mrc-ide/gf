@@ -46,11 +46,11 @@ ggplot(gts_gf, aes(x = year, y = cases, col = run)) +
 
 ```{r, echo = FALSE, message = FALSE}
 bc <- gf_optimised %>%
-  filter(budget_prop == 1,
-         year %in% 2024:2026) %>%
-  group_by(pre, post) %>%
+  filter(year %in% 2024:2026) %>%
+  group_by(pre, budget_prop, post) %>%
   summarise(cost = sum(total_cost)) %>%
-  mutate(as_prop = cost / global_plan_budget)
+  mutate(as_prop = cost / global_plan_budget,
+         diff = budget_prop - as_prop)
 
 print(bc)
 ```
