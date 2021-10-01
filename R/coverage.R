@@ -18,7 +18,7 @@ proportion_overlap <- function(age_lower, age_upper, range_lower, range_upper){
 
 #' Age specific coverage
 #' 
-#' Adjust overall coverage to be age disaggregated. Where intervention target age group does not allign exactly with
+#' Adjust overall coverage to be age disaggregated. Where intervention target age group does not align exactly with
 #' one of more target age groups we adjust coverage as a proportion.
 #'
 #' @param x Model output

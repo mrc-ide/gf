@@ -45,6 +45,15 @@ age_upper
 par
   : Population at risk.
   
+par_SMC
+  : SMC eligible population at risk.
+  
+par_ipti
+  : IPTi eligible population at risk.
+  
+par_rtss
+  : RTS,S eligible population at risk.
+  
 cases
   : Number of clinical malaria cases. The 95% uncertainty intervals are denoted by _lower and _upper suffixes.
   

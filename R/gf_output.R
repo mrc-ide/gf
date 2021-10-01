@@ -66,7 +66,10 @@ gf_aggregate <- function(x, ...){
       surveillance_cost = sum(.data$surveillance_cost),
       elimination_cost = sum(.data$elimination_cost),
       total_cost = sum(.data$total_cost),
-      par = sum(.data$par)
+      par = sum(.data$par),
+      par = sum(.data$par_smc),
+      par = sum(.data$par_ipti),
+      par = sum(.data$par_rtss)
     ) %>%
     dplyr::ungroup()
 }

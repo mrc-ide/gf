@@ -8,6 +8,7 @@ prune <- function(x){
                   .data$year,
                   .data$age_lower, .data$age_upper,
                   .data$par,
+                  .data$par_smc, .data$par_ipti, .data$par_rtss,
                   .data$cases, .data$cases_lower, .data$cases_upper,
                   .data$deaths, .data$deaths_lower, .data$deaths_upper,
                   .data$prev,
