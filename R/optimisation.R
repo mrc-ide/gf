@@ -6,18 +6,13 @@
 #' @return Data for use in optimisation
 #' @export
 create_optimisation_data <- function(processed_output, max_year = 2030){
-  weighting <- case_weighting %>%
-    dplyr::filter(.data$ISO == processed_output$ISO[1]) %>%
-    dplyr::pull(.data$multiplier)
-  
   epi_out <- processed_output %>%
     dplyr::filter(.data$year %in% 2024:max_year) %>%
     dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur, .data$pre, .data$replenishment, .data$post) %>%
     dplyr::summarise(cases = sum(.data$cases),
-                     deaths = sum(.data$deaths)) %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate(y = .data$deaths + .data$cases * weighting)
-
+                     deaths = sum(.data$deaths),
+                     y = sum(.data$y))
+  
   cost_out <- processed_output %>%
     dplyr::filter(.data$year %in% 2024:2026) %>%
     dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur, .data$pre, .data$replenishment, .data$post) %>%
@@ -183,4 +178,14 @@ multi_optimisation <- function(x, gp_replenishment_budget, budget_prop, force_gp
     }
   }
   return(out)
+}
+
+
+#' Get case weighting
+#'
+#' @param ISO ISO code
+get_weighting <- function(ISO){
+  case_weighting %>%
+    dplyr::filter(.data$ISO == processed_output$ISO[1]) %>%
+    dplyr::pull(.data$multiplier)
 }
