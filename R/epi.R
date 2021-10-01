@@ -22,6 +22,12 @@ epi_post_processing <- function(x){
 #' Add age disaggregated population at risk
 #'
 #' @param x Model output
+#' @param ipti_age_lower Lower age IPTi
+#' @param ipti_age_upper Upper age for IPTi
+#' @param rtss_age_lower Lower age for RTS,S
+#' @param rtss_age_upper Upper age for RTS,S
+#' @param smc_age_lower Lower age for SMC
+#' @param smc_age_upper Upper age for SMC
 par <- function(x, smc_age_lower = 0.5, smc_age_upper = 5, ipti_age_lower = 0.25, ipti_age_upper = 2, rtss_age_lower = 0.125, rtss_age_upper = 1.5){
   x %>%
     dplyr::mutate(par = round(.data$par * .data$prop),

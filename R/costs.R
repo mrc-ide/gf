@@ -1,4 +1,5 @@
 component_costs <- function(x){
+  # NB RTSS costs and surveillance costs set to 0 as they are assummed to be funded outside of gf envelope
   x %>%
     dplyr::mutate(
       pyrethroid_net_cost = round(.data$pyrethroid_nets_distributed * .data$cost_per_pyrethoid_net_delivered),
@@ -8,7 +9,7 @@ component_costs <- function(x){
       actellic_irs_cost = round(.data$actellic_irs_people_protected * .data$cost_per_person_protected_by_actellic_irs),
       smc_cost = round(.data$smc_doses * .data$cost_per_smc_dose_delivered),
       ipti_cost = round(.data$ipti_doses * .data$cost_per_ipti_dose_delivered),
-      rtss_cost = round(.data$rtss_doses * .data$cost_per_rtss_dose_delivered),
+      rtss_cost = 0, #round(.data$rtss_doses * .data$cost_per_rtss_dose_delivered),
       rdt_cost = round(.data$pf_rdt * .data$cost_per_rdt),
       act_cost = round(.data$pf_act_courses * .data$cost_per_course_act),
       non_act_cost = round(.data$pf_non_act_courses * .data$cost_per_course_non_act),
@@ -18,7 +19,7 @@ component_costs <- function(x){
       non_malarial_fever_act_cost = round(.data$non_malarial_fever_act * .data$cost_per_course_act),
       outpatient_cost = round(.data$outpatient_visits * .data$cost_per_outpatient_visit),
       inpatient_cost = round(.data$inpatient_visits * .data$cost_per_inpatient_visit),
-      surveillance_cost = round(.data$par * .data$cost_per_capita_surveillance),
+      surveillance_cost = 0, #round(.data$par * .data$cost_per_capita_surveillance),
       case_investigation_cost = round(dplyr::case_when(.data$population_api <= 5 & .data$population_api >4 ~ 0.15 * .data$cases * .data$cost_per_case_investigated,
                                           .data$population_api <= 4 & .data$population_api >3 ~ 0.3 * .data$cases * .data$cost_per_case_investigated,
                                           .data$population_api <= 3 & .data$population_api >2 ~ 0.5 * .data$cases * .data$cost_per_case_investigated,

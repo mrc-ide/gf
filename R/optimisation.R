@@ -183,7 +183,7 @@ multi_optimisation <- function(x, gp_replenishment_budget, budget_prop, force_gp
 
 #' Get case weighting
 #'
-#' @param ISO ISO code
+#' @param iso ISO code
 #' @export
 get_weighting <- function(iso){
   case_weighting %>%

@@ -4,10 +4,10 @@
 \alias{get_weighting}
 \title{Get case weighting}
 \usage{
-get_weighting(ISO)
+get_weighting(iso)
 }
 \arguments{
-\item{ISO}{ISO code}
+\item{iso}{ISO code}
 }
 \description{
 Get case weighting

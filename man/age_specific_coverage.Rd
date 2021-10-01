@@ -30,6 +30,6 @@ age_specific_coverage(
 \item{rtss_age_upper}{Upper age for RTS,S}
 }
 \description{
-Adjust overall coverage to be age disaggregated. Where intervention target age group does not allign exactly with
+Adjust overall coverage to be age disaggregated. Where intervention target age group does not align exactly with
 one of more target age groups we adjust coverage as a proportion.
 }
