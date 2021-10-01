@@ -127,7 +127,15 @@
     <p>Add age disaggregated population at risk</p>
     </div>
 
-    <pre class="usage"><span class='fu'>par</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>par</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  smc_age_lower <span class='op'>=</span> <span class='fl'>0.5</span>,
+  smc_age_upper <span class='op'>=</span> <span class='fl'>5</span>,
+  ipti_age_lower <span class='op'>=</span> <span class='fl'>0.25</span>,
+  ipti_age_upper <span class='op'>=</span> <span class='fl'>2</span>,
+  rtss_age_lower <span class='op'>=</span> <span class='fl'>0.125</span>,
+  rtss_age_upper <span class='op'>=</span> <span class='fl'>1.5</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,6 +143,30 @@
     <tr>
       <th>x</th>
       <td><p>Model output</p></td>
+    </tr>
+    <tr>
+      <th>smc_age_lower</th>
+      <td><p>Lower age for SMC</p></td>
+    </tr>
+    <tr>
+      <th>smc_age_upper</th>
+      <td><p>Upper age for SMC</p></td>
+    </tr>
+    <tr>
+      <th>ipti_age_lower</th>
+      <td><p>Lower age IPTi</p></td>
+    </tr>
+    <tr>
+      <th>ipti_age_upper</th>
+      <td><p>Upper age for IPTi</p></td>
+    </tr>
+    <tr>
+      <th>rtss_age_lower</th>
+      <td><p>Lower age for RTS,S</p></td>
+    </tr>
+    <tr>
+      <th>rtss_age_upper</th>
+      <td><p>Upper age for RTS,S</p></td>
     </tr>
     </table>
 
