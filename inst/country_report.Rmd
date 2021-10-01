@@ -102,6 +102,32 @@ print(interventions_replenishment)
 
 \newpage
 
+## Weighted sum cases and deaths
+
+```{r, echo = FALSE, fig.height = 6, fig.width = 11, message = FALSE}
+y_budget_prop <- gf_optimised %>%
+  filter(year %in% 2024:2030) %>%
+  group_by(pre, budget_prop, post) %>%
+  summarise(y = sum(y))
+
+y_replenishment <- ggplot(y_budget_prop, aes(x = budget_prop, y = y, fill = budget_prop)) +
+  geom_bar(stat = "identity") +
+  scale_fill_discrete(name = "Proportion of global plan budget") +
+  xlab("Proportion of global plan budget") +
+  ylab("Weighted sum cases deaths replenishment period") +
+  theme_bw() +
+  theme(legend.title = element_text(size = 10), 
+        legend.text  = element_text(size = 10),
+        legend.key.size = unit(0.5, "lines"),
+        axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  facet_grid(post ~ pre)
+y_replenishment
+
+```
+
+
+\newpage
+
 ## Cases
 
 ```{r, echo = FALSE, fig.height = 6, fig.width = 11, message = FALSE}
