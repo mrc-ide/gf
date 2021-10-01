@@ -184,6 +184,7 @@ multi_optimisation <- function(x, gp_replenishment_budget, budget_prop, force_gp
 #' Get case weighting
 #'
 #' @param ISO ISO code
+#' @export
 get_weighting <- function(ISO){
   case_weighting %>%
     dplyr::filter(.data$ISO == processed_output$ISO[1]) %>%
