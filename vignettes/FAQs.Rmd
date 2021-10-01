@@ -39,7 +39,22 @@ incidence settings, due to model stochastic, it is possible for a run with
 lower tx coverage to have lower case numbers than a run with higher treatment 
 coverage.
 
-### 3. How do I filter outputs to select a specific scenario?
+### 3. Why does the weighted sum of cases and deaths (y) decrease with b for the scenario `post = continue`, whilst not always for the scenario `post = gp`?
+
+This seems counter intuitive as we wouldn't expect the post-replenishement period to 
+have any impact on the replenishment period! The optimisation is run on the `post = continue`
+scenario. When we apply this optimal solution to the `post = gp` scenario it is applied to 
+a different set of model runs. These vary stochastically from the `post = continue` runs. This
+stochastic variation can lead to the weighted sum of cases and deaths (y) not always decreasing
+monotonically with b. This problem will be most pronounced in low transmission countries where
+the stochastic variation is more influential.
+
+### 4. Why is the budget for a given `b` scenario not always `<=  b * global plan budget`?
+
+For the same reason as above, stochastic differences in the treatment costs for the `post = gp`
+can lead to small fluctuations in the total cost. 
+
+### 5. How do I filter outputs to select a specific scenario?
 
 Filtering a specific scenario can be performed by selecting the relevant 
 scenario options from the pre, replenishment and post scenario columns. For 
@@ -50,7 +65,7 @@ replenishment and post scenarios (e.g. `pre = Follow_GP`, `replenishment = Rever
 and `post = Revert_to_GP`). Please see the 
 [companion output dictionary vignette](Output_dictionary.html) for more help.
 
-### 4. Can I interpolate intervention coverage between optimised budget levels?
+### 6. Can I interpolate intervention coverage between optimised budget levels?
 
 In most cases yes, however intervention trends over multiple budget steps may
 not be linear or monotonic. As a result it is suggested to always interpolate
@@ -58,7 +73,7 @@ between single budget steps (e.g. 0.6 to 0.65), not across multiple
 (e.g. 0.6 to 0.8). Optimised output is provided with steps of 0.05 to 
 facilitate this.
 
-### 5. Why do some countries not have the full compliment of budget levels?
+### 7. Why do some countries not have the full compliment of budget levels?
 
 In a number of cases the solutions of lower budget levels are not possible as
 the minimum cost solution for the country exceeds these lower budget bounds. As
