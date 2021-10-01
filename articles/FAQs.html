@@ -96,19 +96,29 @@
 <p>There are a number of reasons why this could occur, Firstly the optimisation is set up to minimise and equally weighted sum of cases and deaths. Therefore an increase in one output, may be outweighed by a decrease in the other. In this case the aggregate weighted sum of cases and deaths will have increased with a smaller budget.</p>
 <p>Secondly, One of the conditions of the budget optimisation is that treatment must be the last intervention for which coverage is reduced when reducing the available budget. This is implemented by removing any lower-coverage treatment options when the budget is high enough. When the budget is reduced below this threshold the lower-coverage treatment options become available again. For low incidence settings, due to model stochastic, it is possible for a run with lower tx coverage to have lower case numbers than a run with higher treatment coverage.</p>
 </div>
+<div id="why-does-the-weighted-sum-of-cases-and-deaths-y-decrease-with-b-for-the-scenario-post-continue-whilst-not-always-for-the-scenario-post-gp" class="section level3">
+<h3 class="hasAnchor">
+<a href="#why-does-the-weighted-sum-of-cases-and-deaths-y-decrease-with-b-for-the-scenario-post-continue-whilst-not-always-for-the-scenario-post-gp" class="anchor"></a>3. Why does the weighted sum of cases and deaths (y) decrease with b for the scenario <code>post = continue</code>, whilst not always for the scenario <code>post = gp</code>?</h3>
+<p>This seems counter intuitive as we wouldn’t expect the post-replenishement period to have any impact on the replenishment period! The optimisation is run on the <code>post = continue</code> scenario. When we apply this optimal solution to the <code>post = gp</code> scenario it is applied to a different set of model runs. These vary stochastically from the <code>post = continue</code> runs. This stochastic variation can lead to the weighted sum of cases and deaths (y) not always decreasing monotonically with b. This problem will be most pronounced in low transmission countries where the stochastic variation is more influential.</p>
+</div>
+<div id="why-is-the-budget-for-a-given-b-scenario-not-always-b-global-plan-budget" class="section level3">
+<h3 class="hasAnchor">
+<a href="#why-is-the-budget-for-a-given-b-scenario-not-always-b-global-plan-budget" class="anchor"></a>4. Why is the budget for a given <code>b</code> scenario not always <code>&lt;=  b * global plan budget</code>?</h3>
+<p>For the same reason as above, stochastic differences in the treatment costs for the <code>post = gp</code> can lead to small fluctuations in the total cost.</p>
+</div>
 <div id="how-do-i-filter-outputs-to-select-a-specific-scenario" class="section level3">
 <h3 class="hasAnchor">
-<a href="#how-do-i-filter-outputs-to-select-a-specific-scenario" class="anchor"></a>3. How do I filter outputs to select a specific scenario?</h3>
+<a href="#how-do-i-filter-outputs-to-select-a-specific-scenario" class="anchor"></a>5. How do I filter outputs to select a specific scenario?</h3>
 <p>Filtering a specific scenario can be performed by selecting the relevant scenario options from the pre, replenishment and post scenario columns. For budget optimisation outputs, select the relevant pre and post scenarios and the required budget proportion (e.g. <code>pre = Follow_GP</code>, <code>replenishement = 0.75</code> and <code>post = Revert_to_GP</code>). For fixed scenarions, select the relevant pre, replenishment and post scenarios (e.g. <code>pre = Follow_GP</code>, <code>replenishment = Revert_to_GP</code> and <code>post = Revert_to_GP</code>). Please see the <a href="Output_dictionary.html">companion output dictionary vignette</a> for more help.</p>
 </div>
 <div id="can-i-interpolate-intervention-coverage-between-optimised-budget-levels" class="section level3">
 <h3 class="hasAnchor">
-<a href="#can-i-interpolate-intervention-coverage-between-optimised-budget-levels" class="anchor"></a>4. Can I interpolate intervention coverage between optimised budget levels?</h3>
+<a href="#can-i-interpolate-intervention-coverage-between-optimised-budget-levels" class="anchor"></a>6. Can I interpolate intervention coverage between optimised budget levels?</h3>
 <p>In most cases yes, however intervention trends over multiple budget steps may not be linear or monotonic. As a result it is suggested to always interpolate between single budget steps (e.g. 0.6 to 0.65), not across multiple (e.g. 0.6 to 0.8). Optimised output is provided with steps of 0.05 to facilitate this.</p>
 </div>
 <div id="why-do-some-countries-not-have-the-full-compliment-of-budget-levels" class="section level3">
 <h3 class="hasAnchor">
-<a href="#why-do-some-countries-not-have-the-full-compliment-of-budget-levels" class="anchor"></a>5. Why do some countries not have the full compliment of budget levels?</h3>
+<a href="#why-do-some-countries-not-have-the-full-compliment-of-budget-levels" class="anchor"></a>7. Why do some countries not have the full compliment of budget levels?</h3>
 <p>In a number of cases the solutions of lower budget levels are not possible as the minimum cost solution for the country exceeds these lower budget bounds. As no solution can be found in these instances, the output is omitted.</p>
 </div>
   </div>
