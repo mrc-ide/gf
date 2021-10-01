@@ -1,0 +1,15 @@
+variable,min (inclusive),max (inclusive)
+age_lower,0,95
+age_upper,1,100
+par,0,Inf
+par_SMC,0,Inf
+par_ipti,0,Inf
+par_rtss,0,Inf
+cases,0,Inf
+deaths,0,Inf
+life_years,0,Inf
+dalys,0,Inf
+yll,0,Inf
+yld,0,Inf
+_coverage,0,1
+_cost,0,Inf

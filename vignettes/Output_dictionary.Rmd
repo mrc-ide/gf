@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-
+Click [here](https://github.com/mrc-ide/gf/tree/master/data/min_max_bounds.csv) for min/max bounds of variables.
 
 ISO
   : Country iso3c code.
