@@ -185,8 +185,8 @@ multi_optimisation <- function(x, gp_replenishment_budget, budget_prop, force_gp
 #'
 #' @param ISO ISO code
 #' @export
-get_weighting <- function(ISO){
+get_weighting <- function(iso){
   case_weighting %>%
-    dplyr::filter(.data$ISO == ISO) %>%
+    dplyr::filter(.data$ISO == iso) %>%
     dplyr::pull(.data$multiplier)
 }
