@@ -12,7 +12,7 @@ library(tidyr)
 library(gf)
 iso <- unique(gf_optimised$ISO)
 country <- unique(gf_optimised$NAME_0)
-gf_optimised$budget_prop = factor(gf_optimised$budget_prop)
+
 gf_optimised$pre = factor(gf_optimised$pre, levels = c("continueddisruption", "pastperformance", "targets", "gp"))
 ```
 
@@ -50,9 +50,12 @@ bc <- gf_optimised %>%
   group_by(pre, budget_prop, post) %>%
   summarise(cost = sum(total_cost)) %>%
   mutate(as_prop = cost / global_plan_budget,
-         diff = budget_prop - as_prop)
+         diff = budget_prop - as_prop) %>%
+  filter(abs(diff) > 0.05)
 
 print(bc)
+
+gf_optimised$budget_prop = factor(gf_optimised$budget_prop)
 ```
 
 \newpage
