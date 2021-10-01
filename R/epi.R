@@ -116,8 +116,8 @@ daly_components <- function(x, lifespan = 63,
 life_years <- function(x){
   x %>%
     dplyr::mutate(life_years = 1 * (.data$par - .data$deaths) + 0.5 * .data$deaths,
-                  life_years_lower = 1 * (.data$par - .data$deaths_lower) + 0.5 * .data$deaths_lower,
-                  life_years_upper = 1 * (.data$par - .data$deaths_upper) + 0.5 * .data$deaths_upper)
+                  life_years_upper = 1 * (.data$par - .data$deaths_lower) + 0.5 * .data$deaths_lower,
+                  life_years_lower = 1 * (.data$par - .data$deaths_upper) + 0.5 * .data$deaths_upper)
 }
 
 
