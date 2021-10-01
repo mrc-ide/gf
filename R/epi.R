@@ -25,9 +25,9 @@ epi_post_processing <- function(x){
 par <- function(x, smc_age_lower = 0.5, smc_age_upper = 5, ipti_age_lower = 0.25, ipti_age_upper = 2, rtss_age_lower = 0.125, rtss_age_upper = 1.5){
   x %>%
     dplyr::mutate(par = round(.data$par * .data$prop),
-                  par_smc = proportion_overlap(.data$age_lower, .data$age_upper, smc_age_lower, smc_age_upper) * par,
-                  par_ipti = proportion_overlap(.data$age_lower, .data$age_upper, ipti_age_lower, ipti_age_upper) * par,
-                  par_rtss = proportion_overlap(.data$age_lower, .data$age_upper, rtss_age_lower, rtss_age_upper) * par)
+                  par_smc = round(proportion_overlap(.data$age_lower, .data$age_upper, smc_age_lower, smc_age_upper) * par),
+                  par_ipti = round(proportion_overlap(.data$age_lower, .data$age_upper, ipti_age_lower, ipti_age_upper) * par),
+                  par_rtss = round(proportion_overlap(.data$age_lower, .data$age_upper, rtss_age_lower, rtss_age_upper) * par))
 }
 
 #' Add clinical cases
