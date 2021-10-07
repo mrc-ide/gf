@@ -49,9 +49,13 @@ forward_adjust_iccm <- function(x){
 #' @param reference_coverage GP coverage in 2026
 #'
 #' @export
-coverage_options <- function(reference_coverage){
+coverage_options <- function(reference_coverage, force_on_only = FALSE){
   if(reference_coverage > 0){
-    c(0, 1)
+    if(!force_on_only){
+      c(0, 1)
+    } else {
+      1
+    }
   } else {
     0
   }
@@ -68,7 +72,7 @@ create_intervention_option_matrix <- function(ref_year, tx_options = c(0, 0.25, 
                                       llin = coverage_options(ref_year$net_coverage),
                                       irs = coverage_options(ref_year$irs_coverage),
                                       smc = coverage_options(ref_year$smc_coverage),
-                                      rtss = coverage_options(ref_year$rtss_coverage),
+                                      rtss = coverage_options(ref_year$rtss_coverage, force_on_only = TRUE),
                                       iccm = coverage_options(ref_year$iccm_coverage),
                                       ipti = coverage_options(ref_year$ipti_coverage)) %>%
     # Remove the last row which should == the GP
@@ -160,7 +164,7 @@ replenishment_options <- function(gp_input_single){
     dplyr::select(.data$Continent, .data$ISO, .data$NAME_0, .data$NAME_1, .data$NAME_2,.data$ur, .data$pre, .data$replenishment, .data$post, .data$interventions, tidyr::everything())
   output_continue_post <- output_gp_post %>%
     dplyr::mutate(post = "continue",
-           interventions = purrr::map(.data$interventions, fixed_post))
+                  interventions = purrr::map(.data$interventions, fixed_post))
   
   output <- dplyr::bind_rows(output_gp_post, output_continue_post)
   
