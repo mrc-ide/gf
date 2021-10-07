@@ -28,7 +28,9 @@ commodities_and_services <- function(x){
       non_malarial_fever_rdts = round(ifelse(.data$population_prevalence > 0.05, 0.37 * .data$non_malarial_fevers * .data$treatment_coverage, 0)),
       non_malarial_fever_act = round(.data$non_malarial_fever_rdts * .data$prev),
       outpatient_visits = round(.data$treatment_coverage * .data$cases),
-      inpatient_visits = round(.data$treatment_coverage * .data$severe_cases)
+      inpatient_visits = round(.data$treatment_coverage * .data$severe_cases),
+      llin_n = .data$pyrethroid_nets_distributed + .data$pyrethroid_pbo_nets_distributed + .data$pyrethroid_chlorfenapyr_nets_distributed,
+      irs_n = .data$ddt_irs_people_protected + .data$actellic_irs_people_protected
     )
 }
 
