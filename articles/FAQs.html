@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gf</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.36</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.37</span>
       </span>
     </div>
 
@@ -120,6 +120,11 @@
 <h3 class="hasAnchor">
 <a href="#why-do-some-countries-not-have-the-full-compliment-of-budget-levels" class="anchor"></a>7. Why do some countries not have the full compliment of budget levels?</h3>
 <p>In a number of cases the solutions of lower budget levels are not possible as the minimum cost solution for the country exceeds these lower budget bounds. As no solution can be found in these instances, the output is omitted.</p>
+</div>
+<div id="why-does-impact-not-decrease-linearly-as-b-decreases" class="section level3">
+<h3 class="hasAnchor">
+<a href="#why-does-impact-not-decrease-linearly-as-b-decreases" class="anchor"></a>8. Why does impact not decrease linearly as b decreases?</h3>
+<p>As the budget decreases we must remove interventions to decrease costs accordingly. Treatment is prioritised in the optimisation and not reduced before all other interventions have been removed. This means we must remove preventative interventions, such as LLINs first. Reducing these interventions can lead to increased transmission and, for a fixed treatment coverage, an increase in treatment costs. This creates a threshold condition whereby either very large decreases in coverage must be made in a single step (to offset both the decrease in budget and associated rise in treatment cost), or none at all. The point at which this big jump from high to low (or no) coverage occurs corresponds to a big jump in cases and deaths. The level of b where this happens is transmission dependent.</p>
 </div>
   </div>
 
