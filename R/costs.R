@@ -19,7 +19,7 @@ component_costs <- function(x){
       non_malarial_fever_act_cost = round(.data$non_malarial_fever_act * .data$cost_per_course_act),
       outpatient_cost = round(.data$outpatient_visits * .data$cost_per_outpatient_visit),
       inpatient_cost = round(.data$inpatient_visits * .data$cost_per_inpatient_visit),
-      surveillance_cost = 0, #round(.data$par * .data$cost_per_capita_surveillance),
+      surveillance_cost = round(.data$par * .data$cost_per_capita_surveillance),
       case_investigation_cost = round(dplyr::case_when(.data$population_api <= 5 & .data$population_api >4 ~ 0.15 * .data$cases * .data$cost_per_case_investigated,
                                           .data$population_api <= 4 & .data$population_api >3 ~ 0.3 * .data$cases * .data$cost_per_case_investigated,
                                           .data$population_api <= 3 & .data$population_api >2 ~ 0.5 * .data$cases * .data$cost_per_case_investigated,

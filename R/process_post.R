@@ -17,6 +17,7 @@ prune <- function(x){
                   .data$yll, .data$yll_lower, .data$yll_upper,
                   .data$dalys, .data$dalys_lower, .data$dalys_upper,
                   dplyr::contains("coverage"),
+                  .data$llin_n, .data$irs_n,
                   .data$net_cost, .data$irs_cost, .data$smc_cost, .data$ipti_cost,
                   .data$rtss_cost, .data$diagnostic_and_treatment_cost,
                   .data$surveillance_cost, .data$elimination_cost, .data$total_cost) 

@@ -43,6 +43,8 @@ age_specific_coverage <- function(x, smc_age_lower = 0.5, smc_age_upper = 5, ipt
 #' @param x  Model output
 any_vc_coverage <- function(x){
   x %>%
-    dplyr::mutate(vector_control_coverage = pmin(.data$net_coverage + .data$irs_coverage, 1))
+    dplyr::mutate(vector_control_coverage = pmin(.data$net_coverage + .data$irs_coverage, 1),
+                  llin_n = .data$pyrethroid_nets_distributed + .data$pyrethroid_pbo_nets_distributed + .data$pyrethroid_chlorfenapyr_nets_distributed,
+                  irs_n = .data$ddt_irs_people_protected + .data$actellic_irs_people_protected)
 }
 
