@@ -4,10 +4,12 @@
 \alias{coverage_options}
 \title{Create set of binary coverage options}
 \usage{
-coverage_options(reference_coverage)
+coverage_options(reference_coverage, force_on_only = FALSE)
 }
 \arguments{
 \item{reference_coverage}{GP coverage in 2026}
+
+\item{force_on_only}{Force output = 1 only if present}
 }
 \description{
 Return 0 if no coverage in GP reference year or 0, 1 if there was,

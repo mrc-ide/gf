@@ -42,7 +42,7 @@ test_that("costs", {
   expect_equal(df$non_malarial_fever_rdt_cost, round(df$non_malarial_fever_rdts * unit_costs$cost_per_rdt))
   expect_equal(df$proactive_case_detection_cost, 0)
   expect_equal(df$case_investigation_cost, round(0.15 * df$cases * unit_costs$cost_per_case_investigated * (2020 - 2015) *  (1 / (2030-2015))))
-  expect_equal(df$surveillance_cost, 0)
+  expect_equal(df$surveillance_cost, 50)
   
   tx <- dplyr::filter(treatment_unit_costs, ISO == df$ISO, age_lower == df$age_lower, age_upper == df$age_upper)
   expect_equal(df$act_cost, round(df$pf_act_courses * tx$cost_per_course_act))

@@ -47,6 +47,7 @@ forward_adjust_iccm <- function(x){
 #' Return 0 if no coverage in GP reference year or 0, 1 if there was,
 #'
 #' @param reference_coverage GP coverage in 2026
+#' @param force_on_only Force output = 1 only if present
 #'
 #' @export
 coverage_options <- function(reference_coverage, force_on_only = FALSE){
