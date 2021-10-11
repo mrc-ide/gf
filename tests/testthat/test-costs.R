@@ -51,17 +51,13 @@ test_that("costs", {
   expect_equal(df$inpatient_cost, round(df$inpatient_visits * tx$cost_per_inpatient_visit))
   expect_equal(df$outpatient_cost, round(df$outpatient_visits * tx$cost_per_outpatient_visit))
   
-  total_cost_check <- df %>%
-    dplyr::select(contains("_cost")) %>%
-    sum()
-  
   df <- category_costs(df)
   expect_equal(df$net_cost, df$pyrethroid_net_cost + df$pyrethroid_pbo_net_cost + df$pyrethroid_chlorfenapyr_net_cost)
   expect_equal(df$irs_cost, df$ddt_irs_cost + df$actellic_irs_cost)
-  expect_equal(df$diagnostic_and_treatment_cost, df$rdt_cost + df$act_cost + df$non_act_cost + 
+  expect_equal(df$diagnostic_and_treatment_cost, df$prop_public * (df$rdt_cost + df$act_cost + df$non_act_cost + 
                  df$microscopy_cost + df$act_primaquine_cost + df$non_malarial_fever_rdt_cost + 
-                 df$non_malarial_fever_act_cost + df$inpatient_cost + df$outpatient_cost)
+                 df$non_malarial_fever_act_cost + df$inpatient_cost + df$outpatient_cost))
   expect_equal(df$elimination_cost, df$case_investigation_cost + df$proactive_case_detection_cost)
   
-  expect_equal(df$total_cost, total_cost_check)
+  expect_equal(df$total_cost, df$net_cost + df$irs_cost + df$smc_cost + df$ipti_cost + df$rtss_cost + df$diagnostic_and_treatment_cost + df$elimination_cost + df$surveillance_cost)
 })
