@@ -143,9 +143,12 @@ multi_optimisation <- function(x, gp_replenishment_budget, budget_prop, force_gp
     dplyr::ungroup() %>%
     dplyr::pull(.data$cost) %>%
     sum()
-  # In the second phase (when first phase not affordable) all interventions except treatment have been removed
-  second_phase_data <- x %>%
-    dplyr::filter(.data$replenishment %in% c("tx25", "tx50", "tx75", "tx100", "none"))
+  # In the second phase (when first phase not affordable) all interventions except treatment 
+    # (and RTS,S which is "free") have been removed
+  second_phase_data <- x %>% dplyr::filter(.data$replenishment %in% 
+                                             c("tx25", "tx50", "tx75", "tx100", "none",
+                                               "rtss", "tx25_rtss", "tx50_rtss",
+                                               "tx75_rtss", "tx100_rtss"))
   # Estimate the minimum budget required to obtain a second phase solution
   min_budget_second_phase <- second_phase_data %>%
     dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur) %>%
