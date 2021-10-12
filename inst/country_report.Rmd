@@ -50,10 +50,11 @@ bc <- gf_optimised %>%
   group_by(pre, budget_prop, post) %>%
   summarise(cost = sum(total_cost)) %>%
   mutate(as_prop = cost / global_plan_budget,
-         diff = budget_prop - as_prop) %>%
-  filter(abs(diff) > 0.05)
+         diff = budget_prop - as_prop)
 
-print(bc)
+ggplot(bc, aes(x = 1:nrow(bc), y = diff, col = factor(budget_prop))) +
+  geom_point() +
+  theme_bw()
 
 gf_optimised$budget_prop = factor(gf_optimised$budget_prop)
 ```
