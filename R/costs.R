@@ -35,12 +35,13 @@ component_costs <- function(x){
 
 category_costs <- function(x){
   x %>% 
+    dplyr::left_join(gf_public, by = "ISO") %>%
     dplyr::mutate(
       net_cost = .data$pyrethroid_net_cost + .data$pyrethroid_pbo_net_cost + .data$pyrethroid_chlorfenapyr_net_cost,
       irs_cost = .data$ddt_irs_cost + .data$actellic_irs_cost,
-      diagnostic_and_treatment_cost = .data$rdt_cost + .data$act_cost + .data$non_act_cost + 
+      diagnostic_and_treatment_cost = .data$prop_public * (.data$rdt_cost + .data$act_cost + .data$non_act_cost + 
         .data$microscopy_cost + .data$act_primaquine_cost + .data$non_malarial_fever_rdt_cost + 
-        .data$non_malarial_fever_act_cost + .data$inpatient_cost + .data$outpatient_cost,
+        .data$non_malarial_fever_act_cost + .data$inpatient_cost + .data$outpatient_cost),
       elimination_cost = .data$case_investigation_cost + .data$proactive_case_detection_cost,
       total_cost = .data$net_cost + .data$irs_cost + .data$smc_cost + .data$ipti_cost + .data$rtss_cost +
         .data$diagnostic_and_treatment_cost + .data$surveillance_cost + .data$elimination_cost

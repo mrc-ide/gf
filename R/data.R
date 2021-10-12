@@ -50,4 +50,6 @@
 #' 
 "case_weighting"
 
-
+#' Proportion of treatment public sector
+#' 
+"gf_public"
