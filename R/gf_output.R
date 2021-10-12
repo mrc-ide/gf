@@ -17,7 +17,7 @@ gf_select <- function(x){
                   .data$life_years, .data$life_years_lower, .data$life_years_upper,
                   .data$dalys, .data$dalys_lower, .data$dalys_upper,
                   dplyr::contains("coverage"),
-                  .data$llin_n, .data$irs_n,
+                  .data$llin_n, .data$irs_n,  .data$irs_hh,
                   .data$net_cost, .data$irs_cost, .data$smc_cost, .data$ipti_cost,
                   .data$rtss_cost, .data$diagnostic_and_treatment_cost,
                   .data$surveillance_cost, .data$elimination_cost, .data$total_cost) %>%
@@ -56,6 +56,7 @@ gf_aggregate <- function(x, ...){
       irs_coverage = stats::weighted.mean(.data$irs_coverage, .data$par),
       vector_control_coverage = stats::weighted.mean(.data$vector_control_coverage, .data$par),
       irs_people_protected = sum(.data$irs_n),
+      irs_hh = sum(.data$irs_hh),
       smc_coverage = stats::weighted.mean(.data$smc_coverage, .data$par),
       rtss_coverage = stats::weighted.mean(.data$rtss_coverage, .data$par),
       ipti_coverage = stats::weighted.mean(.data$ipti_coverage, .data$par),

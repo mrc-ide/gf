@@ -9,6 +9,7 @@ link_data <- function(x, coverage_input){
   treatment_unit_costs <- get("treatment_unit_costs")
   unit_costs <- get("unit_costs")
   population_projections <- get("population_projections")
+  hh <- get("hh")
   x %>%
     # Coverage
     dplyr::left_join(coverage_input, by = c("NAME_0", "NAME_1", "NAME_2", "ur", "pre", "replenishment", "post", "year")) %>%
@@ -23,5 +24,7 @@ link_data <- function(x, coverage_input){
     # Other unit costs
     dplyr::bind_cols(unit_costs) %>%
     # Population
-    dplyr::left_join(population_projections, by = c("Continent", "ISO", "NAME_0", "NAME_1", "NAME_2", "ur", "year"))
+    dplyr::left_join(population_projections, by = c("Continent", "ISO", "NAME_0", "NAME_1", "NAME_2", "ur", "year")) %>%
+    # HH sizes
+    dplyr::left_join(hh, by = "ISO")
 }

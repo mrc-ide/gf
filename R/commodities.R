@@ -30,7 +30,8 @@ commodities_and_services <- function(x){
       outpatient_visits = round(.data$treatment_coverage * .data$cases),
       inpatient_visits = round(.data$treatment_coverage * .data$severe_cases),
       llin_n = .data$pyrethroid_nets_distributed + .data$pyrethroid_pbo_nets_distributed + .data$pyrethroid_chlorfenapyr_nets_distributed,
-      irs_n = .data$ddt_irs_people_protected + .data$actellic_irs_people_protected
+      irs_n = .data$ddt_irs_people_protected + .data$actellic_irs_people_protected,
+      irs_hh = round(.data$irs_n / .data$hh_size)
     )
 }
 
