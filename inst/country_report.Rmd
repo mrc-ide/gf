@@ -49,11 +49,15 @@ bc <- gf_optimised %>%
   filter(year %in% 2024:2026) %>%
   group_by(pre, budget_prop, post) %>%
   summarise(cost = sum(total_cost)) %>%
-  mutate(as_prop = cost / global_plan_budget,
-         diff = budget_prop - as_prop)
+  mutate(budget = budget_prop * global_plan_budget,
+         p = cost / budget)
 
-ggplot(bc, aes(x = 1:nrow(bc), y = diff, col = factor(budget_prop))) +
+ggplot(bc, aes(x = 1:nrow(bc), y = p, col = factor(budget_prop))) +
   geom_point() +
+  scale_colour_discrete(name = "") +
+  xlab("")+
+  ylim(0.8, 1.1) +
+  ylab("Cost / Budget") +
   theme_bw()
 
 gf_optimised$budget_prop = factor(gf_optimised$budget_prop)
