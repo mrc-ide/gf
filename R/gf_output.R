@@ -71,9 +71,9 @@ gf_aggregate <- function(x, ...){
       elimination_cost = sum(.data$elimination_cost),
       total_cost = sum(.data$total_cost),
       par = sum(.data$par),
-      par = sum(.data$par_smc),
-      par = sum(.data$par_ipti),
-      par = sum(.data$par_rtss)
+      par_smc = sum(.data$par_smc),
+      par_ipti = sum(.data$par_ipti),
+      par_rtss = sum(.data$par_rtss)
     ) %>%
     dplyr::ungroup()
 }
