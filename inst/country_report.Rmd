@@ -385,3 +385,45 @@ ggplot(gf_fixed, aes(x = year, y = cases, col = pre, linetype = post)) +
   geom_line() +
   theme_bw()
 ```
+
+\newpage
+
+```{r, echo = FALSE, fig.height = 6, fig.width = 11, message = FALSE}
+# LLINs
+llins <- comp %>%
+  select(ISO, year, pre, replenishment, post, net_n, llins_n) %>%
+  rename(Out = net_n, In = llins_n) %>%
+  pivot_longer(-c(ISO, year, pre, replenishment, post), names_to = "d", values_to = "llins") %>%
+  filter(replenishment == 1)
+
+ggplot(llins, aes(x = year, y = llins, fill = d)) + 
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(pre ~ ISO)
+
+# IRS
+irs <- comp %>%
+  select(ISO, year, pre, replenishment, post, irs_people_protected, irs_n) %>%
+  left_join(gf::hh, by = "ISO") %>%
+  mutate(irs_hh = irs_people_protected / hh_size) %>%
+  select(-irs_people_protected, hh_size) %>%
+  rename(Out = irs_hh, In = irs_n) %>%
+  pivot_longer(-c(ISO, year, pre, replenishment, post), names_to = "d", values_to = "irs") %>%
+  filter(replenishment == 1)
+
+ggplot(irs, aes(x = year, y = irs, fill = d)) + 
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(pre ~ ISO) +
+  ylab("IRS HHs")
+
+# SMC
+smc <- comp %>%
+  mutate(smc_children = smc_coverage * par) %>%
+  select(ISO, year, pre, replenishment, post, smc_children, smc_child_n) %>%
+  rename(Out = smc_children, In = smc_child_n) %>%
+  pivot_longer(-c(ISO, year, pre, replenishment, post), names_to = "d", values_to = "llins") %>%
+  filter(replenishment == 1)
+
+ggplot(smc, aes(x = year, y = llins, fill = d)) + 
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(pre ~ ISO)
+```
