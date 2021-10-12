@@ -16,7 +16,8 @@ test_that("commodities and services", {
                    severe_cases = 10,
                    non_malarial_fevers = 25,
                    prev = 0.6,
-                   population_prevalence = 0.6
+                   population_prevalence = 0.6,
+                   hh_size = 4
                    )
   df <- commodities_and_services(df)
   

@@ -23,7 +23,8 @@ test_that("costs", {
                    non_malarial_fevers = 25,
                    prev = 0.6,
                    population_prevalence = 0.6,
-                   population_api = 4.5
+                   population_api = 4.5,
+                   hh_size = 4
   ) %>% 
     commodities_and_services() %>%
     tidyr::crossing(unit_costs) %>%
