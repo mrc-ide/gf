@@ -405,7 +405,7 @@ irs <- comp %>%
   select(ISO, year, pre, replenishment, post, irs_people_protected, irs_n) %>%
   left_join(gf::hh, by = "ISO") %>%
   mutate(irs_hh = irs_people_protected / hh_size) %>%
-  select(-irs_people_protected, hh_size) %>%
+  select(-irs_people_protected, -hh_size) %>%
   rename(Out = irs_hh, In = irs_n) %>%
   pivot_longer(-c(ISO, year, pre, replenishment, post), names_to = "d", values_to = "irs") %>%
   filter(replenishment == 1)
