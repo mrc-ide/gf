@@ -78,3 +78,35 @@ gf_aggregate <- function(x, ...){
     ) %>%
     dplyr::ungroup()
 }
+
+#' Final formatting
+#'
+#' @param out data
+#'
+#' @export
+final_format <- function(out){
+  out %>%
+    select(ISO,	NAME_0,	pre, replenishment, post, everything()) %>%
+    mutate(
+      pre = case_when(
+        pre == "gp" ~ "Follow_GP",
+        pre == "targets" ~ "Follow_Targets",
+        pre == "pastperformance" ~ "Follow_PastPeformance",
+        pre == "continueddisruption" ~ "Follow_ContinuedDisruption",
+        TRUE ~ pre),
+      replenishment = case_when(
+        replenishment == "constcov" ~ "CONSTCOV",
+        replenishment == "continue" ~ "MAINTAIN_COV",
+        replenishment == "gp" ~ "REVERT_TO_GP",
+        replenishment == "zerocov" ~ "ZEROCOV",
+        TRUE ~ replenishment
+      ),
+      post = case_when(
+        post == "constcov" ~ "CONSTCOV",
+        post == "continue" ~ "MAINTAIN_COV",
+        post == "gp" ~ "REVERT_TO_GP",
+        post == "zerocov" ~ "ZEROCOV",
+        TRUE ~ post
+      )
+    )
+}
