@@ -423,7 +423,7 @@ smc <- comp %>%
   pivot_longer(-c(ISO, year, pre, replenishment, post), names_to = "d", values_to = "llins") %>%
   filter(replenishment == 1)
 
-ggplot(smc, aes(x = year, y = llins, fill = d)) + 
+ggplot(smc, aes(x = year, y = smc, fill = d)) + 
   geom_bar(stat = "identity", position = "dodge") +
   facet_grid(pre ~ ISO)
 ```
