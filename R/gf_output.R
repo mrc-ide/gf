@@ -93,12 +93,14 @@ final_format <- function(out){
         pre == "targets" ~ "Follow_Targets",
         pre == "pastperformance" ~ "Follow_PastPeformance",
         pre == "continueddisruption" ~ "Follow_ContinuedDisruption",
+        pre == "neverchange" ~ "NEVERCHANGE",
         TRUE ~ pre),
       replenishment = case_when(
         replenishment == "constcov" ~ "CONSTCOV",
         replenishment == "continue" ~ "MAINTAIN_COV",
         replenishment == "gp" ~ "REVERT_TO_GP",
         replenishment == "zerocov" ~ "ZEROCOV",
+        replenishment == "neverchange" ~ "NEVERCHANGE",
         TRUE ~ replenishment
       ),
       post = case_when(
@@ -106,6 +108,7 @@ final_format <- function(out){
         post == "continue" ~ "MAINTAIN_COV",
         post == "gp" ~ "REVERT_TO_GP",
         post == "zerocov" ~ "ZEROCOV",
+        post == "neverchange" ~ "NEVERCHANGE",
         TRUE ~ post
       )
     )
