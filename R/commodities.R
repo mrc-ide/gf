@@ -92,3 +92,12 @@ add_target_use <- function(x){
   x %>%
     dplyr::mutate(target_use = ifelse(.data$net_coverage < 0.05 & .data$net_coverage > 0, 0.1, round(.data$net_coverage, 1)))
 }
+
+#' Find nearest LLIN target use to match to NPC outputs
+#'
+#' @param x Model output
+adjust_net_efficiency <- function(x){
+  x %>%
+    dplyr::mutate(eq_npc = ifelse(.data$year < 2024, eq_npc, optimal_eq_npc)) %>%
+    dplyr::select(-optimal_eq_npc)
+}

@@ -67,6 +67,7 @@ process_raw <- function(raw_output, threshold = 0, input_address, ...){
     any_vc_coverage() %>%
     elim_threshold(threshold = threshold) %>%
     epi_post_processing() %>%
+    adjust_net_efficiency() %>%
     commodities_and_services() %>%
     component_costs() %>%
     category_costs() %>%
