@@ -132,9 +132,11 @@ single_optimisation <- function(x, budget){
 multi_optimisation <- function(x, gp_replenishment_budget, budget_prop, force_gp = FALSE){
   budgets <- gp_replenishment_budget * budget_prop
   
-  # In the first phase (when affordable) all solutions must include (max) treatment
+  # In the first phase (when affordable) all solutions must include (max of at least 25 tx) treatment
   first_phase_data <- x %>%
-    dplyr::filter(grepl("tx100", .data$replenishment) | grepl("gp", .data$replenishment))
+    dplyr::filter(grepl("tx100", .data$replenishment) | grepl("tx75", .data$replenishment) | 
+                    grepl("tx50", .data$replenishment) | grepl("tx25", .data$replenishment) | 
+                    grepl("gp", .data$replenishment))
   # Estimate the minimum budget required to obtain a first phase solution
   min_budget_first_phase <- first_phase_data %>%
     dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur) %>%
@@ -146,9 +148,7 @@ multi_optimisation <- function(x, gp_replenishment_budget, budget_prop, force_gp
   # In the second phase (when first phase not affordable) all interventions except treatment 
     # (and RTS,S which is "free") have been removed
   second_phase_data <- x %>% dplyr::filter(.data$replenishment %in% 
-                                             c("tx25", "tx50", "tx75", "tx100", "none",
-                                               "rtss", "tx25_rtss", "tx50_rtss",
-                                               "tx75_rtss", "tx100_rtss"))
+                                             c("tx25", "none", "rtss", "tx25_rtss"))
   # Estimate the minimum budget required to obtain a second phase solution
   min_budget_second_phase <- second_phase_data %>%
     dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur) %>%
