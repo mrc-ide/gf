@@ -98,6 +98,6 @@ add_target_use <- function(x){
 #' @param x Model output
 adjust_net_efficiency <- function(x){
   x %>%
-    dplyr::mutate(eq_npc = ifelse(.data$year < 2024, eq_npc, optimal_eq_npc)) %>%
+    dplyr::mutate(eq_npc = ifelse(.data$year >= 2024 & .data$replenishment != "gp", optimal_eq_npc, eq_npc)) %>%
     dplyr::select(-optimal_eq_npc)
 }
