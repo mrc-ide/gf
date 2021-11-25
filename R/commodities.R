@@ -11,9 +11,18 @@ commodities_and_services <- function(x){
   x %>%
     dplyr::mutate(
       eq_npc = ifelse(.data$target_use == 0, 0, .data$eq_npc),
-      pyrethroid_nets_distributed = ifelse(.data$net_type == "pyrethroid", round(annual_net_distibuted_gts(.data$eq_npc) * .data$par), 0),
-      pyrethroid_pbo_nets_distributed = ifelse(.data$net_type == "pbo", round(annual_net_distibuted_gts(.data$eq_npc) * .data$par), 0),
-      pyrethroid_chlorfenapyr_nets_distributed = ifelse(.data$net_type == "ig2", round(annual_net_distibuted_gts(.data$eq_npc) * .data$par), 0),
+      optimal_eq_npc = ifelse(.data$target_use == 0, 0, .data$optimal_eq_npc),
+      
+      pyrethroid_nets_distributed = ifelse(.data$net_type == "pyrethroid", round(annual_net_distibuted_gts(.data$optimal_eq_npc) * .data$par), 0),
+      pyrethroid_pbo_nets_distributed = ifelse(.data$net_type == "pbo", round(annual_net_distibuted_gts(.data$optimal_eq_npc) * .data$par), 0),
+      pyrethroid_chlorfenapyr_nets_distributed = ifelse(.data$net_type == "ig2", round(annual_net_distibuted_gts(.data$optimal_eq_npc) * .data$par), 0),
+      
+      pyrethroid_nets_distributed_inef = ifelse(.data$net_type == "pyrethroid", round(annual_net_distibuted_gts(.data$eq_npc) * .data$par), 0),
+      pyrethroid_pbo_nets_distributed_inef = ifelse(.data$net_type == "pbo", round(annual_net_distibuted_gts(.data$eq_npc) * .data$par), 0),
+      pyrethroid_chlorfenapyr_nets_distributed_inef = ifelse(.data$net_type == "ig2", round(annual_net_distibuted_gts(.data$eq_npc) * .data$par), 0),
+      
+      
+      
       ddt_irs_people_protected = ifelse(.data$irs_compound == "ddt", round(.data$irs_coverage * .data$par), 0),
       actellic_irs_people_protected = ifelse(.data$irs_compound == "actellic", round(.data$irs_coverage * .data$par), 0),
       smc_doses = round(.data$smc_coverage * .data$par * .data$smc_rounds),
@@ -30,6 +39,7 @@ commodities_and_services <- function(x){
       outpatient_visits = round(.data$treatment_coverage * .data$cases),
       inpatient_visits = round(.data$treatment_coverage * .data$severe_cases),
       llin_n = .data$pyrethroid_nets_distributed + .data$pyrethroid_pbo_nets_distributed + .data$pyrethroid_chlorfenapyr_nets_distributed,
+      llin_n_inef = .data$pyrethroid_nets_distributed_inef + .data$pyrethroid_pbo_nets_distributed_inef + .data$pyrethroid_chlorfenapyr_nets_distributed_inef,
       irs_n = .data$ddt_irs_people_protected + .data$actellic_irs_people_protected,
       irs_hh = round(.data$irs_n / .data$hh_size)
     )
@@ -98,6 +108,5 @@ add_target_use <- function(x){
 #' @param x Model output
 adjust_net_efficiency <- function(x){
   x %>%
-    dplyr::mutate(eq_npc = ifelse(.data$year >= 2024 & .data$replenishment != "gp", optimal_eq_npc, eq_npc)) %>%
-    dplyr::select(-optimal_eq_npc)
+    dplyr::mutate(optimal_eq_npc = ifelse(.data$year >= 2024, optimal_eq_npc, eq_npc))
 }

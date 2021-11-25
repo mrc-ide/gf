@@ -2,9 +2,16 @@ component_costs <- function(x){
   # NB RTSS costs and surveillance costs set to 0 as they are assummed to be funded outside of gf envelope
   x %>%
     dplyr::mutate(
+      
       pyrethroid_net_cost = round(.data$pyrethroid_nets_distributed * .data$cost_per_pyrethoid_net_delivered),
       pyrethroid_pbo_net_cost = round(.data$pyrethroid_pbo_nets_distributed * .data$cost_per_pyrethroid_pbo_net_delivered),
       pyrethroid_chlorfenapyr_net_cost = round(.data$pyrethroid_chlorfenapyr_nets_distributed * .data$cost_per_pyrethroid_chlorfenapyr_net_delivered),
+      
+      pyrethroid_net_cost_inef = round(.data$pyrethroid_nets_distributed_inef * .data$cost_per_pyrethoid_net_delivered),
+      pyrethroid_pbo_net_cost_inef = round(.data$pyrethroid_pbo_nets_distributed_inef * .data$cost_per_pyrethroid_pbo_net_delivered),
+      pyrethroid_chlorfenapyr_net_cost_inef = round(.data$pyrethroid_chlorfenapyr_nets_distributed_inef * .data$cost_per_pyrethroid_chlorfenapyr_net_delivered),
+      
+      
       ddt_irs_cost = round(.data$ddt_irs_people_protected * .data$cost_per_person_protected_by_ddt_irs),
       actellic_irs_cost = round(.data$actellic_irs_people_protected * .data$cost_per_person_protected_by_actellic_irs),
       smc_cost = round(.data$smc_doses * .data$cost_per_smc_dose_delivered),
@@ -38,12 +45,15 @@ category_costs <- function(x){
     dplyr::left_join(gf_public, by = "ISO") %>%
     dplyr::mutate(
       net_cost = .data$pyrethroid_net_cost + .data$pyrethroid_pbo_net_cost + .data$pyrethroid_chlorfenapyr_net_cost,
+      net_cost_inef = .data$pyrethroid_net_cost_inef + .data$pyrethroid_pbo_net_cost_inef + .data$pyrethroid_chlorfenapyr_net_cost_inef,
       irs_cost = .data$ddt_irs_cost + .data$actellic_irs_cost,
       diagnostic_and_treatment_cost = .data$prop_public * (.data$rdt_cost + .data$act_cost + .data$non_act_cost + 
         .data$microscopy_cost + .data$act_primaquine_cost + .data$non_malarial_fever_rdt_cost + 
         .data$non_malarial_fever_act_cost + .data$inpatient_cost + .data$outpatient_cost),
       elimination_cost = .data$case_investigation_cost + .data$proactive_case_detection_cost,
       total_cost = .data$net_cost + .data$irs_cost + .data$smc_cost + .data$ipti_cost + .data$rtss_cost +
+        .data$diagnostic_and_treatment_cost + .data$surveillance_cost + .data$elimination_cost,
+      total_cost_inef = .data$net_cost_inef + .data$irs_cost + .data$smc_cost + .data$ipti_cost + .data$rtss_cost +
         .data$diagnostic_and_treatment_cost + .data$surveillance_cost + .data$elimination_cost
     )
 }
