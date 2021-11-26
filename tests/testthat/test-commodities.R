@@ -2,6 +2,7 @@ test_that("commodities and services", {
   df <- data.frame(par = 1000,
                    target_use = 0.6,
                    eq_npc = 0.8,
+                   optimal_eq_npc = 0.6,
                    net_type = "pyrethroid",
                    irs_coverage = 0.5,
                    irs_compound = "actellic",
@@ -21,7 +22,7 @@ test_that("commodities and services", {
                    )
   df <- commodities_and_services(df)
   
-  expect_equal(df$pyrethroid_nets_distributed, round(annual_net_distibuted_gts(0.8) * 1000))
+  expect_equal(df$pyrethroid_nets_distributed, round(annual_net_distibuted_gts(0.6) * 1000))
   expect_equal(df$pyrethroid_pbo_nets_distributed, 0)
   expect_equal(df$pyrethroid_chlorfenapyr_nets_distributed, 0)
   expect_equal(df$ddt_irs_people_protected, 0)

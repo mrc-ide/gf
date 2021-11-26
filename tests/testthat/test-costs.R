@@ -6,6 +6,7 @@ test_that("costs", {
                    par = 1000,
                    target_use = 0.6,
                    eq_npc = 0.8,
+                   optimal_eq_npc = 0.6,
                    net_type = "pyrethroid",
                    irs_coverage = 0.5,
                    irs_compound = "actellic",
