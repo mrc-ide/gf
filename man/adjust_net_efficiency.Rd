@@ -2,7 +2,7 @@
 % Please edit documentation in R/commodities.R
 \name{adjust_net_efficiency}
 \alias{adjust_net_efficiency}
-\title{Find nearest LLIN target use to match to NPC outputs}
+\title{After 2023, net distribution switches to the most efficient observed country for all countries}
 \usage{
 adjust_net_efficiency(x)
 }
@@ -10,5 +10,5 @@ adjust_net_efficiency(x)
 \item{x}{Model output}
 }
 \description{
-Find nearest LLIN target use to match to NPC outputs
+After 2023, net distribution switches to the most efficient observed country for all countries
 }

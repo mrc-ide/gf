@@ -103,7 +103,7 @@ add_target_use <- function(x){
     dplyr::mutate(target_use = ifelse(.data$net_coverage < 0.05 & .data$net_coverage > 0, 0.1, round(.data$net_coverage, 1)))
 }
 
-#' Find nearest LLIN target use to match to NPC outputs
+#' After 2023, net distribution switches to the most efficient observed country for all countries
 #'
 #' @param x Model output
 adjust_net_efficiency <- function(x){
