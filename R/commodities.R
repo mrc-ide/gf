@@ -118,10 +118,14 @@ adjust_net_efficiency <- function(x){
 approx_target_use <- function(iso, eq_npc){
   out <- c()
   for(i in seq_along(iso)){
-    t1 <- use_npc[use_npc$ISO == iso[i], ]
-    t1 <- t1[c(1, diff(t1$eq_npc)) > 0, ]
-    f1 <- approxfun(x = t1$eq_npc, y = t1$target_use, rule = 2)
-    out[i] <- f1(eq_npc[i])
+    if(is.na(eq_npc[i])){
+      out[i] <- 0
+    } else{
+      t1 <- use_npc[use_npc$ISO == iso[i], ]
+      t1 <- t1[c(1, diff(t1$eq_npc)) > 0, ]
+      f1 <- approxfun(x = t1$eq_npc, y = t1$target_use, rule = 2)
+      out[i] <- f1(eq_npc[i])
+    }
   }
   return(out)
 }
