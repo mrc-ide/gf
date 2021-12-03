@@ -44,6 +44,33 @@ dominant <- function(x){
     dplyr::arrange(.data$NAME_0, .data$NAME_1, .data$NAME_2, .data$ur, .data$pre, .data$cost)
 }
 
+#' Filter non-dominant solutions
+#'
+#' @param x Data to optimise
+#'
+#' @export
+dominant2 <- function(x){
+  xgp <- x %>% dplyr::filter(.data$replenishment == "gp")
+  
+  x0 <- x %>%
+    dplyr::filter(.data$replenishment != "gp", .data$y == 0) %>%
+    group_by(.data$NAME_0, 
+             .data$NAME_1, .data$NAME_2, .data$ur, .data$pre) %>%
+    slice_min(cost, n = 1, with_ties = FALSE) %>%
+    ungroup()
+  
+  x %>% dplyr::filter(.data$replenishment != "gp", .data$y > 0) %>% 
+    dplyr::group_by(.data$NAME_0, .data$NAME_1, .data$NAME_2, 
+                    .data$ur, .data$pre) %>% 
+    dplyr::arrange(.data$cost, .by_group = TRUE) %>%
+    dplyr::filter(.data$y == cummin(.data$y)) %>% 
+    dplyr::ungroup() %>% 
+    dplyr::bind_rows(xgp) %>%
+    dplyr::bind_rows(x0) %>%
+    dplyr::arrange(.data$NAME_0, 
+                   .data$NAME_1, .data$NAME_2, .data$ur, .data$pre, .data$cost)
+}
+
 #' Create optimisation matrices
 #' 
 #' Creates two i (solution) x j (site) matrices one containing costs one y.
@@ -79,9 +106,19 @@ create_optim_matrices <- function(x, nopt, nsites, maxy, maxcost){
 #' @return Optimisaed output
 #' @export
 single_optimisation <- function(x, budget){
+  
+  d2 <- x$NAME_0[1] %in% c("Guatemala", "Myanmar", "Honduras", "Thailand")
+  
   # Filter for dominant solutions
-  optim_data <- x %>%
-    dominant()
+  if(!d2){
+    optim_data <- x %>%
+      dominant()
+  } else {
+    optim_data <- x %>%
+      dominant2()
+  }
+  
+  
   
   maxy <- max(optim_data$y)
   maxcost <- max(optim_data$cost)
@@ -146,7 +183,7 @@ multi_optimisation <- function(x, gp_replenishment_budget, budget_prop, force_gp
     dplyr::pull(.data$cost) %>%
     sum()
   # In the second phase (when first phase not affordable) all interventions except treatment 
-    # (and RTS,S which is "free") have been removed
+  # (and RTS,S which is "free") have been removed
   second_phase_data <- x %>% dplyr::filter(.data$replenishment %in% 
                                              c("tx25", "none", "rtss", "tx25_rtss"))
   # Estimate the minimum budget required to obtain a second phase solution

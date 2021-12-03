@@ -1,6 +1,6 @@
 Package: gf
 Title: Global fund malaria modelling
-Version: 0.0.45
+Version: 0.0.46
 Authors@R: c(
   person("Peter", "Winskill", email = "p.winskill@imperial.ac.uk", role = c("aut", "cre"))
   )
@@ -29,9 +29,5 @@ Imports:
     purrr,
     ROI,
     ompr.roi,
-    patchwork
-Depends: 
-    R (>= 2.10),
-    ROI.plugin.glpk,
-    ompr
-VignetteBuilder: knitr
+    patchworkgit status
+    
